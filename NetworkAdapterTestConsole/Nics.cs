@@ -19,6 +19,7 @@ namespace NetworkAdapter
                 return _adapters;
             }
         }
+ 
         public struct NicInfo
         {
             public string Name;
@@ -27,7 +28,7 @@ namespace NetworkAdapter
             public string[] Ipv4Mask;
         }
 
-        public List<NicInfo> NicList = new List<NicInfo>();
+        List<NicInfo> NicList = new List<NicInfo>();
 
         public void UpdateNics()
         {
