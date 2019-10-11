@@ -20,27 +20,43 @@ namespace NetworkAdapter
             }
         }
  
+        public Nics()
+        {
+            UpdateNics();
+        }
         public struct NicInfo
         {
+            public int num;
             public string Name;
             public string ID;
-            public string[] IpAddress;
-            public string[] Ipv4Mask;
+            public string IpAddress;
+            public string Ipv4Mask;
         }
 
-        List<NicInfo> NicList = new List<NicInfo>();
+        public List<NicInfo> NicList = new List<NicInfo>();
 
-        public void UpdateNics()
+        private void UpdateNics()
         {
-            var a = Adapters;
             NicInfo n = new NicInfo();
-            int i = 0;
+
             NicList.Clear();
 
-            foreach (var nic in a)
+            for(int i = 0; i < Adapters.Length; i++)
             {
-                n.Name = nic.Name;
-                n.ID = nic.Id;
+                n.num = i;
+                n.Name = Adapters[i].Name;
+                n.ID = Adapters[i].Id;
+
+                var ipAddresses = Adapters[i].GetIPProperties().UnicastAddresses;
+                foreach (var a in ipAddresses)
+                {
+                    if (!a.Address.IsIPv6LinkLocal)
+                    {
+                        n.Ipv4Mask = a.IPv4Mask.ToString();
+                        n.IpAddress = a.Address.ToString();
+                    }
+                }
+
                 NicList.Add(n);
             }
         }
@@ -48,22 +64,15 @@ namespace NetworkAdapter
         public NicInfo GetNicInfo(string NicName)
         {
             NicInfo n = new NicInfo();
-            UpdateNics();
-            var a = Adapters;
+//            NetworkInterface[] a = Adapters;
 
-            foreach (var nic in a)
+            UpdateNics();
+
+            foreach (var nic in Adapters)
             {
                 if (NicName == nic.Name)
                 {
-                    var ipAddresses = nic.GetIPProperties().UnicastAddresses;
-                    for (int i = 0; i < ipAddresses.Count; i++)
-                    {
-                        if (!ipAddresses[i].Address.IsIPv6LinkLocal && !ipAddresses[i].Address.IsIPv6SiteLocal)
-                        {
-                            n.Ipv4Mask[i] = ipAddresses[i].IPv4Mask.ToString();
-                            n.IpAddress[i] = ipAddresses[i].Address.ToString();
-                        }
-                    }
+
                 }
             }
             return n;
