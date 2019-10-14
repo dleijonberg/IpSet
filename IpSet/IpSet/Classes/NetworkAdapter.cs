@@ -10,7 +10,7 @@ namespace NetworkAdapter
     class Nics
     {
         private NetworkInterface[] _adapters;
-        
+            
         public NetworkInterface[] Adapters 
         {
             get 
@@ -72,6 +72,11 @@ namespace NetworkAdapter
 
                 NicList.Add(n);
             }
+        }
+
+        public void SetNicInfo(int adapterNum, string ipAddress, string ipv4Mask, string gateway)
+        {
+            // Set IP address, Subnet mask, gateway etc.
         }
 
         public NicInfo GetNicInfo(string NicName)

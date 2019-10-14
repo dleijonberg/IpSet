@@ -23,7 +23,9 @@ namespace NetworkAdapterTestConsole
 
             //NicClass.GetNicInfo(NicClass.NicList[num].Name);
             Console.WriteLine("Name: {0}", NicClass.NicList[num].Name);
-            Console.WriteLine("IP: {0}", NicClass.NicList[num].IpAddress);
+            Console.WriteLine("{0}", NicClass.NicList[num].IpAddress);
+            Console.WriteLine("{0}", NicClass.NicList[num].Ipv4Mask);
+            Console.WriteLine("{0}", NicClass.NicList[num].Gateway);
 
             Console.ReadKey();
         }
