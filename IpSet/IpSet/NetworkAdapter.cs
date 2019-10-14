@@ -31,6 +31,7 @@ namespace NetworkAdapter
             public string ID;
             public string IpAddress;
             public string Ipv4Mask;
+            public string Gateway;
         }
 
         public List<NicInfo> NicList = new List<NicInfo>();
@@ -46,16 +47,28 @@ namespace NetworkAdapter
                 n.num = i;
                 n.Name = Adapters[i].Name;
                 n.ID = Adapters[i].Id;
+                
+                
 
-                var ipAddresses = Adapters[i].GetIPProperties().UnicastAddresses;
+                UnicastIPAddressInformationCollection ipAddresses = Adapters[i].GetIPProperties().UnicastAddresses;
                 foreach (var a in ipAddresses)
                 {
                     if (!a.Address.IsIPv6LinkLocal)
                     {
                         n.Ipv4Mask = a.IPv4Mask.ToString();
                         n.IpAddress = a.Address.ToString();
+                        
                     }
                 }
+                GatewayIPAddressInformationCollection Gateways = Adapters[i].GetIPProperties().GatewayAddresses;
+                foreach (var a in Gateways)
+                {
+                    if (!a.Address.IsIPv6LinkLocal)
+                    {
+                        n.Gateway = a.Address.ToString();
+                    }
+                }
+
 
                 NicList.Add(n);
             }
