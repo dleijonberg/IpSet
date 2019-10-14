@@ -29,9 +29,22 @@ namespace IpSet
                 Location = new System.Drawing.Point(20, 50),
                 Width = 100
             };
+            Label txtText = new Label
+            {
+                Name = "txtText",
+                Location = new System.Drawing.Point(170, 20),
+                Width = 100
+
+            };
+
+            InitTextBox();
+
             // Add form controls
             Controls.Add(cbNics);
-            Controls.Add(tbIpAddress);
+            Controls.Add(txtText);
+
+            cbNics.SelectedIndexChanged += new EventHandler(cbNics_SelectedIndexChanged);
+
 
             // Populate controls
             // ComboBox for network adapters
@@ -41,9 +54,32 @@ namespace IpSet
             }
             cbNics.SelectedIndex = 0;
 
+            txtText.Text = "Texttext"; // NicObject.NicList[cbNics.SelectedIndex].IpAddress;
             if (cbNics.SelectedIndex >= 0 && cbNics.SelectedIndex < cbNics.Items.Count)
                 tbIpAddress.Text = NicObject.NicList[cbNics.SelectedIndex].IpAddress;
+            else
+                tbIpAddress.Text = cbNics.SelectedIndex.ToString();
 
+            
+        }
+
+        internal TextBox tbIpAddress = new TextBox();
+        internal Nics NicObject = new Nics();
+
+        private void InitTextBox()
+        {
+            this.tbIpAddress.Name = "tbIpAddress";
+            this.tbIpAddress.Location = new System.Drawing.Point(300, 20);
+            this.tbIpAddress.Width = 100;
+            this.tbIpAddress.ReadOnly = true;
+            this.Controls.Add(tbIpAddress);
+
+        }
+        public void cbNics_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            ComboBox cbSender = (ComboBox) sender;
+            this.tbIpAddress.Text = NicObject.NicList[cbSender.SelectedIndex].IpAddress;
+            
         }
     }
 }
