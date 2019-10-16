@@ -20,14 +20,14 @@ namespace IpSet
 
             // Populate controls
             // ComboBox for network adapters
-            UpdateNics();
+            UpdateCbNicsList();
             cbNics.SelectedIndexChanged += new EventHandler(cbNics_OnSelectedIndexChanged);
 
         }
 
         internal Nics NicObject = new Nics();
 
-        public void UpdateNics()
+        public void UpdateCbNicsList()
         {
             cbNics.Items.Clear();
 
@@ -41,11 +41,12 @@ namespace IpSet
         public void cbNics_OnSelectedIndexChanged(object sender, System.EventArgs e)
         {
             ComboBox cbSender = (ComboBox)sender;
-            this.tbIpAddress.Text = NicObject.NicList[cbSender.SelectedIndex].IpAddress;
-            this.tbSubnetMask.Text = NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask;
-            this.tbGateway.Text = NicObject.NicList[cbSender.SelectedIndex].Gateway;
+            this.lbIpAddress.Text = NicObject.NicList[cbSender.SelectedIndex].IpAddress;
+            this.lbSubnetMask.Text = NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask;
+            this.lbGateway.Text = NicObject.NicList[cbSender.SelectedIndex].Gateway;
 
         }
+
 
     }
 }

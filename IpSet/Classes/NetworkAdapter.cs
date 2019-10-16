@@ -32,6 +32,8 @@ namespace NetworkAdapter
             public string IpAddress;
             public string Ipv4Mask;
             public string Gateway;
+            public string PriDNS;
+            public string SecDNS;
         }
 
         public List<NicInfo> NicList = new List<NicInfo>();
@@ -47,8 +49,6 @@ namespace NetworkAdapter
                 n.num = i;
                 n.Name = Adapters[i].Name;
                 n.ID = Adapters[i].Id;
-                
-                
 
                 UnicastIPAddressInformationCollection ipAddresses = Adapters[i].GetIPProperties().UnicastAddresses;
                 foreach (var a in ipAddresses)
@@ -60,6 +60,7 @@ namespace NetworkAdapter
                         
                     }
                 }
+
                 GatewayIPAddressInformationCollection Gateways = Adapters[i].GetIPProperties().GatewayAddresses;
                 foreach (var a in Gateways)
                 {
@@ -70,6 +71,7 @@ namespace NetworkAdapter
                 }
 
 
+
                 NicList.Add(n);
             }
         }
@@ -78,24 +80,5 @@ namespace NetworkAdapter
         {
             // Set IP address, Subnet mask, gateway etc.
         }
-
-        public NicInfo GetNicInfo(string NicName)
-        {
-            NicInfo n = new NicInfo();
-//            NetworkInterface[] a = Adapters;
-
-            UpdateNics();
-
-            foreach (var nic in Adapters)
-            {
-                if (NicName == nic.Name)
-                {
-
-                }
-            }
-            return n;
-        }
-
-
     }
 }
