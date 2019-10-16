@@ -74,6 +74,7 @@ namespace IpSet
             this.tbGateway.TabIndex = 4;
             this.Controls.Add(this.tbGateway);
         }
+
         public void cbNics_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             ComboBox cbSender = (ComboBox) sender;
