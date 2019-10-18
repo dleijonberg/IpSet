@@ -41,8 +41,8 @@ namespace IpSet
         public void cbNics_OnSelectedIndexChanged(object sender, System.EventArgs e)
         {
             ComboBox cbSender = (ComboBox)sender;
-            this.lbIpAddress.Text = NicObject.NicList[cbSender.SelectedIndex].IpAddress;
-            this.lbSubnetMask.Text = NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask;
+            this.lbIpAddress.Text = NicObject.NicList[cbSender.SelectedIndex].IpAddress[0];
+            this.lbSubnetMask.Text = NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask[0];
             this.lbGateway.Text = NicObject.NicList[cbSender.SelectedIndex].Gateway;
 
         }
