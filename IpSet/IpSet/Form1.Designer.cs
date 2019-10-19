@@ -34,9 +34,17 @@
             this.tbSubnetMask = new IPAddressControlLib.IPAddressControl();
             this.tbGateway = new IPAddressControlLib.IPAddressControl();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tbPriDNS = new IPAddressControlLib.IPAddressControl();
+            this.tbSecDNS = new IPAddressControlLib.IPAddressControl();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lbGateway = new System.Windows.Forms.Label();
             this.lbIpAddress = new System.Windows.Forms.Label();
@@ -46,22 +54,14 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.lbIpAddressHeader = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbSecDNS = new IPAddressControlLib.IPAddressControl();
-            this.tbPriDNS = new IPAddressControlLib.IPAddressControl();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -136,6 +136,31 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(264, 410);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(255, 121);
+            this.tabControl1.TabIndex = 4;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.tbIpAddress);
+            this.tabPage1.Controls.Add(this.tbSubnetMask);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.tbGateway);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(247, 95);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Pri";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -145,6 +170,16 @@
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 3;
             this.label3.Text = "Gateway";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "IP-address";
             // 
             // label2
             // 
@@ -156,15 +191,78 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Subnet mask";
             // 
-            // label1
+            // tabPage2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "IP-address";
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(247, 95);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Alt";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.tbPriDNS);
+            this.groupBox2.Controls.Add(this.tbSecDNS);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(3, 130);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(255, 84);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "DNS settings";
+            // 
+            // tbPriDNS
+            // 
+            this.tbPriDNS.AllowInternalTab = false;
+            this.tbPriDNS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbPriDNS.AutoHeight = true;
+            this.tbPriDNS.BackColor = System.Drawing.SystemColors.Window;
+            this.tbPriDNS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tbPriDNS.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbPriDNS.Location = new System.Drawing.Point(122, 21);
+            this.tbPriDNS.Name = "tbPriDNS";
+            this.tbPriDNS.ReadOnly = false;
+            this.tbPriDNS.Size = new System.Drawing.Size(127, 22);
+            this.tbPriDNS.TabIndex = 2;
+            this.tbPriDNS.Text = "...";
+            // 
+            // tbSecDNS
+            // 
+            this.tbSecDNS.AllowInternalTab = false;
+            this.tbSecDNS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSecDNS.AutoHeight = true;
+            this.tbSecDNS.BackColor = System.Drawing.SystemColors.Window;
+            this.tbSecDNS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tbSecDNS.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbSecDNS.Location = new System.Drawing.Point(122, 49);
+            this.tbSecDNS.Name = "tbSecDNS";
+            this.tbSecDNS.ReadOnly = false;
+            this.tbSecDNS.Size = new System.Drawing.Size(127, 22);
+            this.tbSecDNS.TabIndex = 2;
+            this.tbSecDNS.Text = "...";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(6, 58);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Secondary DNS";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(6, 30);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(67, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Primary DNS";
             // 
             // groupBox3
             // 
@@ -272,121 +370,24 @@
             this.lbIpAddressHeader.TabIndex = 3;
             this.lbIpAddressHeader.Text = "IP-address";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tbPriDNS);
-            this.groupBox2.Controls.Add(this.tbSecDNS);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(3, 130);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(255, 84);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "DNS settings";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 30);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(67, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Primary DNS";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 58);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Secondary DNS";
-            // 
-            // tbSecDNS
-            // 
-            this.tbSecDNS.AllowInternalTab = false;
-            this.tbSecDNS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSecDNS.AutoHeight = true;
-            this.tbSecDNS.BackColor = System.Drawing.SystemColors.Window;
-            this.tbSecDNS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tbSecDNS.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbSecDNS.Location = new System.Drawing.Point(122, 49);
-            this.tbSecDNS.Name = "tbSecDNS";
-            this.tbSecDNS.ReadOnly = false;
-            this.tbSecDNS.Size = new System.Drawing.Size(127, 22);
-            this.tbSecDNS.TabIndex = 2;
-            this.tbSecDNS.Text = "...";
-            // 
-            // tbPriDNS
-            // 
-            this.tbPriDNS.AllowInternalTab = false;
-            this.tbPriDNS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbPriDNS.AutoHeight = true;
-            this.tbPriDNS.BackColor = System.Drawing.SystemColors.Window;
-            this.tbPriDNS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tbPriDNS.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbPriDNS.Location = new System.Drawing.Point(122, 21);
-            this.tbPriDNS.Name = "tbPriDNS";
-            this.tbPriDNS.ReadOnly = false;
-            this.tbPriDNS.Size = new System.Drawing.Size(127, 22);
-            this.tbPriDNS.TabIndex = 2;
-            this.tbPriDNS.Text = "...";
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(3, 3);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(255, 121);
-            this.tabControl1.TabIndex = 4;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.tbIpAddress);
-            this.tabPage1.Controls.Add(this.tbSubnetMask);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.tbGateway);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(247, 95);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Pri";
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(247, 95);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Alt";
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.toolStripSaveButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(502, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // toolStripSaveButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(35, 22);
-            this.toolStripButton1.Text = "Save";
+            this.toolStripSaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSaveButton.Name = "toolStripSaveButton";
+            this.toolStripSaveButton.Size = new System.Drawing.Size(35, 22);
+            this.toolStripSaveButton.Text = "Save";
+            this.toolStripSaveButton.Click += new System.EventHandler(this.toolStripSaveButton_Click);
             // 
             // Form1
             // 
@@ -400,13 +401,13 @@
             this.Text = "IpSet v0.1";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -443,7 +444,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripSaveButton;
     }
 }
 

@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using NetworkAdapter;
-using System.Net;
+using Microsoft.Win32.SafeHandles;
 
 namespace IpSet
 {
@@ -26,6 +27,8 @@ namespace IpSet
         }
 
         internal Nics NicObject = new Nics();
+        private List<Nics.NicInfo> SettingsList = new List<Nics.NicInfo>();
+
 
         public void UpdateCbNicsList()
         {
@@ -64,6 +67,31 @@ namespace IpSet
                 this.lbSecDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[1];
             else
                 this.lbSecDNS.Text = "";
+        }
+
+        private void toolStripSaveButton_Click(object sender, EventArgs e)
+        {
+            string data;
+            StreamWriter file = new StreamWriter("testfile.txt");
+
+            data = "[Settings list]";
+
+            foreach(var s in SettingsList)
+            {
+                data += "Name=" + s.Name + "\r\n";
+                foreach (var ip in s.IpAddress)
+                    data += "IP-address=" + ip + "\r\n";
+                foreach (var sn in s.Ipv4Mask)
+                    data += "Subnet=" + sn + "\r\n";
+                foreach (var gw in s.Gateway)
+                    data += "Gateway=" + gw + "\r\n";
+                foreach (var dns in s.DNS)
+                    data += "DNS=" + dns + "\r\n";
+            }
+
+            file.Write(data);
+            file.Close();
+
         }
     }
 }
