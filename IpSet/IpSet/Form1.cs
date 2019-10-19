@@ -41,12 +41,29 @@ namespace IpSet
         public void cbNics_OnSelectedIndexChanged(object sender, System.EventArgs e)
         {
             ComboBox cbSender = (ComboBox)sender;
-            this.lbIpAddress.Text = NicObject.NicList[cbSender.SelectedIndex].IpAddress[0];
-            this.lbSubnetMask.Text = NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask[0];
-            this.lbGateway.Text = NicObject.NicList[cbSender.SelectedIndex].Gateway;
 
+            this.lbIpAddress.Text = "";
+            this.lbIpAddressHeader.Text = "";
+
+            for (int i = 0; i < NicObject.NicList[cbSender.SelectedIndex].IpAddress.Length; i++)
+            { 
+                this.lbIpAddress.Text += NicObject.NicList[cbSender.SelectedIndex].IpAddress[i] + "\n\r"
+                + NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask[i] + "\n\r\n\r";
+
+                this.lbIpAddressHeader.Text += "IP-address " + (i + 1) + "\n\rSubnet mask " + (i + 1) + "\n\r\n\r";
+            }
+
+            this.lbGateway.Text = NicObject.NicList[cbSender.SelectedIndex].Gateway[0];
+
+            if (NicObject.NicList[cbSender.SelectedIndex].DNS.Length > 0)
+                this.lbPriDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[0];
+            else
+                this.lbPriDNS.Text = "";
+
+            if (NicObject.NicList[cbSender.SelectedIndex].DNS.Length > 1)
+                this.lbSecDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[1];
+            else
+                this.lbSecDNS.Text = "";
         }
-
-
     }
 }

@@ -37,8 +37,8 @@ namespace NetworkAdapter
             public string ID;
             public string[] IpAddress;
             public string[] Ipv4Mask;
-            public string Gateway;
-            public string PriDNS;
+            public string[] Gateway;
+            public string[] DNS;
             public string SecDNS;
         }
         public List<NicInfo> NicList = new List<NicInfo>();
@@ -54,6 +54,8 @@ namespace NetworkAdapter
                 n.ID = a.GetPropertyValue("SettingID").ToString();
                 n.IpAddress = (string[])a.GetPropertyValue("IPAddress");
                 n.Ipv4Mask = (string[])a.GetPropertyValue("IPSubnet");
+                n.Gateway = (string[])a.GetPropertyValue("DefaultIPGateway");
+                n.DNS = (string[])a.GetPropertyValue("DNSServerSearchOrder");
                 NicList.Add(n);
             }
         }
