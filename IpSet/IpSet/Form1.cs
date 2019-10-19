@@ -69,6 +69,14 @@ namespace IpSet
                 this.lbSecDNS.Text = "";
         }
 
+        private void UpdateSettingsList()
+        {
+            lstSettingsList.Items.Clear();
+
+            foreach (var nic in SettingsList)
+                lstSettingsList.Items.Add(nic.Name);
+        }
+
         private void toolStripSaveButton_Click(object sender, EventArgs e)
         {
             string data;
@@ -92,6 +100,17 @@ namespace IpSet
             file.Write(data);
             file.Close();
 
+        }
+
+        private void toolStripNewButton_Click(object sender, EventArgs e)
+        {
+            Nics.NicInfo n = new Nics.NicInfo();
+
+            n.Name = "New entry";
+
+            SettingsList.Add(n);
+
+            UpdateSettingsList();
         }
     }
 }

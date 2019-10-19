@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.cbNics = new System.Windows.Forms.ComboBox();
             this.tbIpAddress = new IPAddressControlLib.IPAddressControl();
@@ -56,6 +57,8 @@
             this.lbIpAddressHeader = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
+            this.lstSettingsList = new System.Windows.Forms.ListBox();
+            this.toolStripNewButton = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -68,9 +71,10 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.cbNics);
+            this.flowLayoutPanel1.Controls.Add(this.lstSettingsList);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 28);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(206, 28);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(206, 410);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // cbNics
@@ -373,7 +377,8 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSaveButton});
+            this.toolStripSaveButton,
+            this.toolStripNewButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(502, 25);
@@ -388,6 +393,24 @@
             this.toolStripSaveButton.Size = new System.Drawing.Size(35, 22);
             this.toolStripSaveButton.Text = "Save";
             this.toolStripSaveButton.Click += new System.EventHandler(this.toolStripSaveButton_Click);
+            // 
+            // lstSettingsList
+            // 
+            this.lstSettingsList.FormattingEnabled = true;
+            this.lstSettingsList.Location = new System.Drawing.Point(3, 30);
+            this.lstSettingsList.Name = "lstSettingsList";
+            this.lstSettingsList.Size = new System.Drawing.Size(200, 368);
+            this.lstSettingsList.TabIndex = 1;
+            // 
+            // toolStripNewButton
+            // 
+            this.toolStripNewButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripNewButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripNewButton.Image")));
+            this.toolStripNewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripNewButton.Name = "toolStripNewButton";
+            this.toolStripNewButton.Size = new System.Drawing.Size(35, 22);
+            this.toolStripNewButton.Text = "New";
+            this.toolStripNewButton.Click += new System.EventHandler(this.toolStripNewButton_Click);
             // 
             // Form1
             // 
@@ -445,6 +468,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripSaveButton;
+        private System.Windows.Forms.ListBox lstSettingsList;
+        private System.Windows.Forms.ToolStripButton toolStripNewButton;
     }
 }
 
