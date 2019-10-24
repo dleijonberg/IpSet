@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.cbNics = new System.Windows.Forms.ComboBox();
+            this.lstSettingsList = new System.Windows.Forms.ListView();
             this.tbIpAddress = new IPAddressControlLib.IPAddressControl();
             this.tbSubnetMask = new IPAddressControlLib.IPAddressControl();
             this.tbGateway = new IPAddressControlLib.IPAddressControl();
@@ -57,8 +58,8 @@
             this.lbIpAddressHeader = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
-            this.lstSettingsList = new System.Windows.Forms.ListBox();
             this.toolStripNewButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -84,6 +85,23 @@
             this.cbNics.Name = "cbNics";
             this.cbNics.Size = new System.Drawing.Size(200, 21);
             this.cbNics.TabIndex = 0;
+            // 
+            // lstSettingsList
+            // 
+            this.lstSettingsList.GridLines = true;
+            this.lstSettingsList.HideSelection = false;
+            this.lstSettingsList.LabelEdit = true;
+            this.lstSettingsList.LabelWrap = false;
+            this.lstSettingsList.Location = new System.Drawing.Point(3, 30);
+            this.lstSettingsList.MultiSelect = false;
+            this.lstSettingsList.Name = "lstSettingsList";
+            this.lstSettingsList.Size = new System.Drawing.Size(200, 365);
+            this.lstSettingsList.TabIndex = 1;
+            this.lstSettingsList.UseCompatibleStateImageBehavior = false;
+            this.lstSettingsList.View = System.Windows.Forms.View.List;
+            this.lstSettingsList.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.lstSettingsList_AfterLabelEdit);
+            this.lstSettingsList.BeforeLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.lstSettingsList_BeforeLabelEdit);
+            this.lstSettingsList.SelectedIndexChanged += new System.EventHandler(this.lstSettingsList_SelectedIndexChanged);
             // 
             // tbIpAddress
             // 
@@ -378,7 +396,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSaveButton,
-            this.toolStripNewButton});
+            this.toolStripNewButton,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(502, 25);
@@ -394,14 +413,6 @@
             this.toolStripSaveButton.Text = "Save";
             this.toolStripSaveButton.Click += new System.EventHandler(this.toolStripSaveButton_Click);
             // 
-            // lstSettingsList
-            // 
-            this.lstSettingsList.FormattingEnabled = true;
-            this.lstSettingsList.Location = new System.Drawing.Point(3, 30);
-            this.lstSettingsList.Name = "lstSettingsList";
-            this.lstSettingsList.Size = new System.Drawing.Size(200, 368);
-            this.lstSettingsList.TabIndex = 1;
-            // 
             // toolStripNewButton
             // 
             this.toolStripNewButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -411,6 +422,15 @@
             this.toolStripNewButton.Size = new System.Drawing.Size(35, 22);
             this.toolStripNewButton.Text = "New";
             this.toolStripNewButton.Click += new System.EventHandler(this.toolStripNewButton_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButton1.Text = "Update";
             // 
             // Form1
             // 
@@ -422,6 +442,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "Form1";
             this.Text = "IpSet v0.1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -468,8 +489,9 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripSaveButton;
-        private System.Windows.Forms.ListBox lstSettingsList;
         private System.Windows.Forms.ToolStripButton toolStripNewButton;
+        private System.Windows.Forms.ListView lstSettingsList;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 

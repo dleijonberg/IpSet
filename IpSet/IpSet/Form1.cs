@@ -15,6 +15,9 @@ namespace IpSet
 {
     public partial class Form1 : Form
     {
+        internal Nics NicObject = new Nics();
+        private List<Nics.NicInfo> SettingsList = new List<Nics.NicInfo>();
+
         public Form1()
         {
             InitializeComponent();
@@ -25,9 +28,6 @@ namespace IpSet
             cbNics.SelectedIndexChanged += new EventHandler(cbNics_OnSelectedIndexChanged);
 
         }
-
-        internal Nics NicObject = new Nics();
-        private List<Nics.NicInfo> SettingsList = new List<Nics.NicInfo>();
 
 
         public void UpdateCbNicsList()
@@ -71,46 +71,82 @@ namespace IpSet
 
         private void UpdateSettingsList()
         {
+            lstSettingsList.BeginUpdate();
             lstSettingsList.Items.Clear();
 
             foreach (var nic in SettingsList)
                 lstSettingsList.Items.Add(nic.Name);
+
+            lstSettingsList.EndUpdate();
         }
 
         private void toolStripSaveButton_Click(object sender, EventArgs e)
         {
-            string data;
-            StreamWriter file = new StreamWriter("testfile.txt");
+            if (tbIpAddress.Text != "")
+                SettingsList[lstSettingsList.SelectedIndices[0]].IpAddress[0] = tbIpAddress.Text;
+            if (tbSubnetMask.Text != "")
+                SettingsList[lstSettingsList.SelectedIndices[0]].Ipv4Mask[0] = tbSubnetMask.Text;
+            if (tbGateway.Text != "")
+                SettingsList[lstSettingsList.SelectedIndices[0]].Gateway[0] = tbGateway.Text;
+            if (tbPriDNS.Text != "")
+                SettingsList[lstSettingsList.SelectedIndices[0]].DNS[0] = tbPriDNS.Text;
+            if (tbSecDNS.Text != "")
+                SettingsList[lstSettingsList.SelectedIndices[0]].DNS[1] = tbSecDNS.Text;
 
-            data = "[Settings list]";
-
-            foreach(var s in SettingsList)
-            {
-                data += "Name=" + s.Name + "\r\n";
-                foreach (var ip in s.IpAddress)
-                    data += "IP-address=" + ip + "\r\n";
-                foreach (var sn in s.Ipv4Mask)
-                    data += "Subnet=" + sn + "\r\n";
-                foreach (var gw in s.Gateway)
-                    data += "Gateway=" + gw + "\r\n";
-                foreach (var dns in s.DNS)
-                    data += "DNS=" + dns + "\r\n";
-            }
-
-            file.Write(data);
-            file.Close();
-
+            Settings.SaveFile(SettingsList);
         }
 
         private void toolStripNewButton_Click(object sender, EventArgs e)
         {
             Nics.NicInfo n = new Nics.NicInfo();
 
+            n.Init();
             n.Name = "New entry";
+            n.num = SettingsList.Count;
 
             SettingsList.Add(n);
 
             UpdateSettingsList();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Settings.OpenFile(SettingsList);
+
+            UpdateSettingsList();
+        }
+
+        private void lstSettingsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListView lstSender = (ListView)sender;
+
+            if (lstSender.SelectedIndices.Count > 0)
+            {
+                var newSetting = SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
+
+                tbIpAddress.Text = (newSetting.IpAddress != null) ? newSetting.IpAddress[0] : "";
+                tbSubnetMask.Text = (newSetting.Ipv4Mask != null) ? newSetting.Ipv4Mask[0] : "";
+                tbGateway.Text = (newSetting.Gateway != null) ? newSetting.Gateway[0] : "";
+                tbPriDNS.Text = (newSetting.DNS != null) ? newSetting.DNS[0] : "";
+                tbSecDNS.Text = (newSetting.DNS != null && newSetting.DNS.Length > 1) ? newSetting.DNS[1] : "";
+            }
+        }
+
+        private void lstSettingsList_AfterLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            ListView lstSender = (ListView)sender;
+
+            var newname = e.Label;
+            int index = SettingsList.FindIndex(x => x.num == lstSender.SelectedIndices[0]);
+
+            Nics.NicInfo tempNic = SettingsList[index];
+            tempNic.Name = newname;
+            SettingsList[index] = tempNic;
+        }
+
+        private void lstSettingsList_BeforeLabelEdit(object sender, LabelEditEventArgs e)
+        {
+
         }
     }
 }

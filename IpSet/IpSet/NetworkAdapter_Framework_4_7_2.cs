@@ -39,7 +39,14 @@ namespace NetworkAdapter
             public string[] Ipv4Mask;
             public string[] Gateway;
             public string[] DNS;
-            public string SecDNS;
+
+            public void Init()
+            {
+                IpAddress = new string[2];
+                Ipv4Mask = new string[2];
+                Gateway = new string[2];
+                DNS = new string[2];
+            }
         }
         public List<NicInfo> NicList = new List<NicInfo>();
 

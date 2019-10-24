@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Settings.cs" />
     <Compile Include="NetworkAdapter_Framework_4_7_2.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
