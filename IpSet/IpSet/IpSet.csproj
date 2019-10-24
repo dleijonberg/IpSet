@@ -52,8 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings.cs" />
-    <Compile Include="NetworkAdapter_Framework_4_7_2.cs" />
+    <Compile Include="..\Classes\NetworkAdapter.cs">
+      <Link>NetworkAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\Classes\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
