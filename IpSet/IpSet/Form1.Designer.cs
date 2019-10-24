@@ -38,10 +38,20 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.radioStatic = new System.Windows.Forms.RadioButton();
+            this.radioDynamic = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.radioAltStatic = new System.Windows.Forms.RadioButton();
+            this.radioAltDynamic = new System.Windows.Forms.RadioButton();
+            this.tbAltIpAddress = new IPAddressControlLib.IPAddressControl();
+            this.tbAltSubnetMask = new IPAddressControlLib.IPAddressControl();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbAltGateway = new IPAddressControlLib.IPAddressControl();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tbPriDNS = new IPAddressControlLib.IPAddressControl();
             this.tbSecDNS = new IPAddressControlLib.IPAddressControl();
@@ -64,6 +74,7 @@
             this.flowLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -75,7 +86,7 @@
             this.flowLayoutPanel1.Controls.Add(this.lstSettingsList);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 28);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(206, 410);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(206, 432);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // cbNics
@@ -95,7 +106,7 @@
             this.lstSettingsList.Location = new System.Drawing.Point(3, 30);
             this.lstSettingsList.MultiSelect = false;
             this.lstSettingsList.Name = "lstSettingsList";
-            this.lstSettingsList.Size = new System.Drawing.Size(200, 365);
+            this.lstSettingsList.Size = new System.Drawing.Size(200, 396);
             this.lstSettingsList.TabIndex = 1;
             this.lstSettingsList.UseCompatibleStateImageBehavior = false;
             this.lstSettingsList.View = System.Windows.Forms.View.List;
@@ -111,7 +122,7 @@
             this.tbIpAddress.BackColor = System.Drawing.SystemColors.Window;
             this.tbIpAddress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tbIpAddress.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbIpAddress.Location = new System.Drawing.Point(118, 6);
+            this.tbIpAddress.Location = new System.Drawing.Point(118, 29);
             this.tbIpAddress.Name = "tbIpAddress";
             this.tbIpAddress.ReadOnly = false;
             this.tbIpAddress.Size = new System.Drawing.Size(123, 20);
@@ -126,7 +137,7 @@
             this.tbSubnetMask.BackColor = System.Drawing.SystemColors.Window;
             this.tbSubnetMask.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tbSubnetMask.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbSubnetMask.Location = new System.Drawing.Point(118, 34);
+            this.tbSubnetMask.Location = new System.Drawing.Point(118, 55);
             this.tbSubnetMask.Name = "tbSubnetMask";
             this.tbSubnetMask.ReadOnly = false;
             this.tbSubnetMask.Size = new System.Drawing.Size(123, 20);
@@ -141,7 +152,7 @@
             this.tbGateway.BackColor = System.Drawing.SystemColors.Window;
             this.tbGateway.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tbGateway.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbGateway.Location = new System.Drawing.Point(118, 62);
+            this.tbGateway.Location = new System.Drawing.Point(118, 81);
             this.tbGateway.Name = "tbGateway";
             this.tbGateway.ReadOnly = false;
             this.tbGateway.Size = new System.Drawing.Size(123, 20);
@@ -155,7 +166,7 @@
             this.flowLayoutPanel2.Controls.Add(this.groupBox3);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(224, 28);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(264, 410);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(264, 432);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // tabControl1
@@ -165,11 +176,13 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(255, 121);
+            this.tabControl1.Size = new System.Drawing.Size(255, 142);
             this.tabControl1.TabIndex = 4;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.radioStatic);
+            this.tabPage1.Controls.Add(this.radioDynamic);
             this.tabPage1.Controls.Add(this.tbIpAddress);
             this.tabPage1.Controls.Add(this.tbSubnetMask);
             this.tabPage1.Controls.Add(this.label3);
@@ -179,15 +192,37 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(247, 95);
+            this.tabPage1.Size = new System.Drawing.Size(247, 116);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pri";
+            // 
+            // radioStatic
+            // 
+            this.radioStatic.AutoSize = true;
+            this.radioStatic.Location = new System.Drawing.Point(118, 6);
+            this.radioStatic.Name = "radioStatic";
+            this.radioStatic.Size = new System.Drawing.Size(52, 17);
+            this.radioStatic.TabIndex = 4;
+            this.radioStatic.Text = "Static";
+            this.radioStatic.UseVisualStyleBackColor = true;
+            // 
+            // radioDynamic
+            // 
+            this.radioDynamic.AutoSize = true;
+            this.radioDynamic.Checked = true;
+            this.radioDynamic.Location = new System.Drawing.Point(9, 6);
+            this.radioDynamic.Name = "radioDynamic";
+            this.radioDynamic.Size = new System.Drawing.Size(66, 17);
+            this.radioDynamic.TabIndex = 4;
+            this.radioDynamic.TabStop = true;
+            this.radioDynamic.Text = "Dynamic";
+            this.radioDynamic.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 69);
+            this.label3.Location = new System.Drawing.Point(6, 88);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 3;
@@ -197,7 +232,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 13);
+            this.label1.Location = new System.Drawing.Point(6, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(57, 13);
             this.label1.TabIndex = 3;
@@ -207,7 +242,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 41);
+            this.label2.Location = new System.Drawing.Point(6, 62);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 13);
             this.label2.TabIndex = 3;
@@ -215,12 +250,117 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.radioAltStatic);
+            this.tabPage2.Controls.Add(this.radioAltDynamic);
+            this.tabPage2.Controls.Add(this.tbAltIpAddress);
+            this.tabPage2.Controls.Add(this.tbAltSubnetMask);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.tbAltGateway);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.label11);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(247, 95);
+            this.tabPage2.Size = new System.Drawing.Size(247, 116);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Alt";
+            // 
+            // radioAltStatic
+            // 
+            this.radioAltStatic.AutoSize = true;
+            this.radioAltStatic.Location = new System.Drawing.Point(118, 6);
+            this.radioAltStatic.Name = "radioAltStatic";
+            this.radioAltStatic.Size = new System.Drawing.Size(52, 17);
+            this.radioAltStatic.TabIndex = 10;
+            this.radioAltStatic.Text = "Static";
+            this.radioAltStatic.UseVisualStyleBackColor = true;
+            // 
+            // radioAltDynamic
+            // 
+            this.radioAltDynamic.AutoSize = true;
+            this.radioAltDynamic.Checked = true;
+            this.radioAltDynamic.Location = new System.Drawing.Point(9, 6);
+            this.radioAltDynamic.Name = "radioAltDynamic";
+            this.radioAltDynamic.Size = new System.Drawing.Size(66, 17);
+            this.radioAltDynamic.TabIndex = 11;
+            this.radioAltDynamic.TabStop = true;
+            this.radioAltDynamic.Text = "Dynamic";
+            this.radioAltDynamic.UseVisualStyleBackColor = true;
+            // 
+            // tbAltIpAddress
+            // 
+            this.tbAltIpAddress.AllowInternalTab = false;
+            this.tbAltIpAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbAltIpAddress.AutoHeight = true;
+            this.tbAltIpAddress.BackColor = System.Drawing.SystemColors.Window;
+            this.tbAltIpAddress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tbAltIpAddress.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbAltIpAddress.Location = new System.Drawing.Point(118, 29);
+            this.tbAltIpAddress.Name = "tbAltIpAddress";
+            this.tbAltIpAddress.ReadOnly = false;
+            this.tbAltIpAddress.Size = new System.Drawing.Size(123, 20);
+            this.tbAltIpAddress.TabIndex = 4;
+            this.tbAltIpAddress.Text = "...";
+            // 
+            // tbAltSubnetMask
+            // 
+            this.tbAltSubnetMask.AllowInternalTab = false;
+            this.tbAltSubnetMask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbAltSubnetMask.AutoHeight = true;
+            this.tbAltSubnetMask.BackColor = System.Drawing.SystemColors.Window;
+            this.tbAltSubnetMask.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tbAltSubnetMask.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbAltSubnetMask.Location = new System.Drawing.Point(118, 55);
+            this.tbAltSubnetMask.Name = "tbAltSubnetMask";
+            this.tbAltSubnetMask.ReadOnly = false;
+            this.tbAltSubnetMask.Size = new System.Drawing.Size(123, 20);
+            this.tbAltSubnetMask.TabIndex = 5;
+            this.tbAltSubnetMask.Text = "...";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(6, 88);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Alt Gateway";
+            // 
+            // tbAltGateway
+            // 
+            this.tbAltGateway.AllowInternalTab = false;
+            this.tbAltGateway.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbAltGateway.AutoHeight = true;
+            this.tbAltGateway.BackColor = System.Drawing.SystemColors.Window;
+            this.tbAltGateway.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tbAltGateway.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbAltGateway.Location = new System.Drawing.Point(118, 81);
+            this.tbAltGateway.Name = "tbAltGateway";
+            this.tbAltGateway.ReadOnly = false;
+            this.tbAltGateway.Size = new System.Drawing.Size(123, 20);
+            this.tbAltGateway.TabIndex = 6;
+            this.tbAltGateway.Text = "...";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(6, 36);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(72, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Alt IP-address";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(6, 62);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(84, 13);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "Alt Subnet mask";
             // 
             // groupBox2
             // 
@@ -229,7 +369,7 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(3, 130);
+            this.groupBox2.Location = new System.Drawing.Point(3, 151);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(255, 84);
             this.groupBox2.TabIndex = 4;
@@ -244,10 +384,11 @@
             this.tbPriDNS.BackColor = System.Drawing.SystemColors.Window;
             this.tbPriDNS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tbPriDNS.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbPriDNS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbPriDNS.Location = new System.Drawing.Point(122, 21);
             this.tbPriDNS.Name = "tbPriDNS";
             this.tbPriDNS.ReadOnly = false;
-            this.tbPriDNS.Size = new System.Drawing.Size(127, 22);
+            this.tbPriDNS.Size = new System.Drawing.Size(123, 20);
             this.tbPriDNS.TabIndex = 2;
             this.tbPriDNS.Text = "...";
             // 
@@ -259,10 +400,11 @@
             this.tbSecDNS.BackColor = System.Drawing.SystemColors.Window;
             this.tbSecDNS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tbSecDNS.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbSecDNS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tbSecDNS.Location = new System.Drawing.Point(122, 49);
             this.tbSecDNS.Name = "tbSecDNS";
             this.tbSecDNS.ReadOnly = false;
-            this.tbSecDNS.Size = new System.Drawing.Size(127, 22);
+            this.tbSecDNS.Size = new System.Drawing.Size(123, 20);
             this.tbSecDNS.TabIndex = 2;
             this.tbSecDNS.Text = "...";
             // 
@@ -297,7 +439,7 @@
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.lbIpAddressHeader);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(3, 220);
+            this.groupBox3.Location = new System.Drawing.Point(3, 241);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(255, 185);
             this.groupBox3.TabIndex = 0;
@@ -436,7 +578,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 453);
+            this.ClientSize = new System.Drawing.Size(502, 475);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -448,6 +590,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -492,6 +636,16 @@
         private System.Windows.Forms.ToolStripButton toolStripNewButton;
         private System.Windows.Forms.ListView lstSettingsList;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.RadioButton radioStatic;
+        private System.Windows.Forms.RadioButton radioDynamic;
+        private IPAddressControlLib.IPAddressControl tbAltIpAddress;
+        private IPAddressControlLib.IPAddressControl tbAltSubnetMask;
+        private System.Windows.Forms.Label label4;
+        private IPAddressControlLib.IPAddressControl tbAltGateway;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.RadioButton radioAltStatic;
+        private System.Windows.Forms.RadioButton radioAltDynamic;
     }
 }
 

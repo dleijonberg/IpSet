@@ -16,7 +16,7 @@ namespace IpSet
     public partial class Form1 : Form
     {
         internal Nics NicObject = new Nics();
-        private List<Nics.NicInfo> SettingsList = new List<Nics.NicInfo>();
+        private List<Nics.Setting> SettingsList = new List<Nics.Setting>();
 
         public Form1()
         {
@@ -74,14 +74,16 @@ namespace IpSet
             lstSettingsList.BeginUpdate();
             lstSettingsList.Items.Clear();
 
-            foreach (var nic in SettingsList)
-                lstSettingsList.Items.Add(nic.Name);
+            foreach (var s in SettingsList)
+                lstSettingsList.Items.Add(s.Name);
 
             lstSettingsList.EndUpdate();
         }
 
         private void toolStripSaveButton_Click(object sender, EventArgs e)
         {
+            SettingsList[lstSettingsList.SelectedIndices[0]].Static[0] = radioStatic.Checked;
+            SettingsList[lstSettingsList.SelectedIndices[0]].Static[1] = radioAltStatic.Checked;
             if (tbIpAddress.Text != "")
                 SettingsList[lstSettingsList.SelectedIndices[0]].IpAddress[0] = tbIpAddress.Text;
             if (tbSubnetMask.Text != "")
@@ -98,11 +100,13 @@ namespace IpSet
 
         private void toolStripNewButton_Click(object sender, EventArgs e)
         {
-            Nics.NicInfo n = new Nics.NicInfo();
+            Nics.Setting n = new Nics.Setting();
 
             n.Init();
             n.Name = "New entry";
             n.num = SettingsList.Count;
+            n.Static[0] = false;
+            n.Static[1] = false;
 
             SettingsList.Add(n);
 
@@ -112,7 +116,6 @@ namespace IpSet
         private void Form1_Load(object sender, EventArgs e)
         {
             Settings.OpenFile(SettingsList);
-
             UpdateSettingsList();
         }
 
@@ -124,6 +127,10 @@ namespace IpSet
             {
                 var newSetting = SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
 
+                radioStatic.Checked = newSetting.Static[0];
+                radioDynamic.Checked = !radioStatic.Checked;
+                radioAltStatic.Checked = newSetting.Static[1];
+                radioAltDynamic.Checked = !radioAltStatic.Checked;
                 tbIpAddress.Text = (newSetting.IpAddress != null) ? newSetting.IpAddress[0] : "";
                 tbSubnetMask.Text = (newSetting.Ipv4Mask != null) ? newSetting.Ipv4Mask[0] : "";
                 tbGateway.Text = (newSetting.Gateway != null) ? newSetting.Gateway[0] : "";
@@ -137,11 +144,10 @@ namespace IpSet
             ListView lstSender = (ListView)sender;
 
             var newname = e.Label;
-            int index = SettingsList.FindIndex(x => x.num == lstSender.SelectedIndices[0]);
 
-            Nics.NicInfo tempNic = SettingsList[index];
+            Nics.Setting tempNic = SettingsList[lstSender.SelectedIndices[0]];
             tempNic.Name = newname;
-            SettingsList[index] = tempNic;
+            SettingsList[lstSender.SelectedIndices[0]] = tempNic;
         }
 
         private void lstSettingsList_BeforeLabelEdit(object sender, LabelEditEventArgs e)

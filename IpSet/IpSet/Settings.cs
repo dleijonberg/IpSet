@@ -12,7 +12,7 @@ namespace IpSet
     {
         static string SettingsFile = "testfile.txt";
 
-        public static void SaveFile(List<Nics.NicInfo> settings)
+        public static void SaveFile(List<Nics.Setting> settings)
         {
             string data = "";
             StreamWriter file = new StreamWriter(SettingsFile);
@@ -24,6 +24,7 @@ namespace IpSet
                 {
                     for (int i = 0; i < s.IpAddress.Length; i++)
                     {
+                        data += "Static " + (i + 1) + "=" + s.Static[i] + "\r\n";
                         data += "IP-address " + (i + 1) + "=" + s.IpAddress[i] + "\r\n";
                         data += "Subnet " + (i + 1) + "=" + s.Ipv4Mask[i] + "\r\n";
                     }
@@ -46,12 +47,12 @@ namespace IpSet
             file.Close();
         }
 
-        public static void OpenFile(List<Nics.NicInfo> settings)
+        public static void OpenFile(List<Nics.Setting> settings)
         {
             string data = "";
             int index = 0;
 
-            Nics.NicInfo n = new Nics.NicInfo();
+            Nics.Setting n = new Nics.Setting();
             StreamReader file = new StreamReader(SettingsFile);
 
             n.Init();
@@ -80,6 +81,18 @@ namespace IpSet
                         n.num = index;
                     }
 
+                }
+                
+                if (data.StartsWith("Static 1"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Static[0] = bool.Parse(data);
+                }
+
+                if (data.StartsWith("Static 2"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Static[1] = bool.Parse(data);
                 }
 
                 if (data.StartsWith("IP-address 1"))
