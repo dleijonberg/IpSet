@@ -10,9 +10,32 @@ namespace IpSet
 {
     class Settings
     {
-        static string SettingsFile = "testfile.txt";
+        private static string SettingsFile = "testfile.txt";
 
-        public static void SaveFile(List<Nics.Setting> settings)
+        public struct Setting
+        {
+            public int num;
+            public string Name;
+            public bool[] Static;
+            public string[] IpAddress;
+            public string[] Ipv4Mask;
+            public string[] Gateway;
+            public string[] DNS;
+
+            public void Init()
+            {
+                Name = "";
+                Static = new bool[2];
+                IpAddress = new string[2];
+                Ipv4Mask = new string[2];
+                Gateway = new string[2];
+                DNS = new string[2];
+            }
+        }
+
+        public List<Setting> SettingsList = new List<Setting>();
+
+        public static void SaveFile(List<Setting> settings)
         {
             string data = "";
             StreamWriter file = new StreamWriter(SettingsFile);
@@ -47,12 +70,12 @@ namespace IpSet
             file.Close();
         }
 
-        public static void OpenFile(List<Nics.Setting> settings)
+        public static void OpenFile(List<Setting> settings)
         {
             string data = "";
             int index = 0;
 
-            Nics.Setting n = new Nics.Setting();
+            Setting n = new Setting();
             StreamReader file = new StreamReader(SettingsFile);
 
             n.Init();

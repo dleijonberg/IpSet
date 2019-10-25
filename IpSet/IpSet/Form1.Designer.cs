@@ -69,7 +69,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripNewButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSetButton = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -111,7 +111,6 @@
             this.lstSettingsList.UseCompatibleStateImageBehavior = false;
             this.lstSettingsList.View = System.Windows.Forms.View.List;
             this.lstSettingsList.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.lstSettingsList_AfterLabelEdit);
-            this.lstSettingsList.BeforeLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.lstSettingsList_BeforeLabelEdit);
             this.lstSettingsList.SelectedIndexChanged += new System.EventHandler(this.lstSettingsList_SelectedIndexChanged);
             // 
             // tbIpAddress
@@ -539,7 +538,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSaveButton,
             this.toolStripNewButton,
-            this.toolStripButton1});
+            this.toolStripSetButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(502, 25);
@@ -565,14 +564,15 @@
             this.toolStripNewButton.Text = "New";
             this.toolStripNewButton.Click += new System.EventHandler(this.toolStripNewButton_Click);
             // 
-            // toolStripButton1
+            // toolStripSetButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton1.Text = "Update";
+            this.toolStripSetButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSetButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSetButton.Image")));
+            this.toolStripSetButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSetButton.Name = "toolStripSetButton";
+            this.toolStripSetButton.Size = new System.Drawing.Size(27, 22);
+            this.toolStripSetButton.Text = "Set";
+            this.toolStripSetButton.Click += new System.EventHandler(this.toolStripSetButton_Click);
             // 
             // Form1
             // 
@@ -635,7 +635,7 @@
         private System.Windows.Forms.ToolStripButton toolStripSaveButton;
         private System.Windows.Forms.ToolStripButton toolStripNewButton;
         private System.Windows.Forms.ListView lstSettingsList;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripSetButton;
         private System.Windows.Forms.RadioButton radioStatic;
         private System.Windows.Forms.RadioButton radioDynamic;
         private IPAddressControlLib.IPAddressControl tbAltIpAddress;

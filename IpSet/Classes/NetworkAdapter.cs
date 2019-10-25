@@ -30,26 +30,6 @@ namespace NetworkAdapter
             }
         }
 
-        public struct Setting
-        {
-            public int num;
-            public string Name;
-            public bool[] Static;
-            public string[] IpAddress;
-            public string[] Ipv4Mask;
-            public string[] Gateway;
-            public string[] DNS;
-
-            public void Init()
-            {
-                Name = "";
-                Static = new bool[2];
-                IpAddress = new string[2];
-                Ipv4Mask = new string[2];
-                Gateway = new string[2];
-                DNS = new string[2];
-            }
-        }
 
         public struct NicInfo
         {

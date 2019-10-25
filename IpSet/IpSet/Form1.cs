@@ -14,7 +14,7 @@ namespace IpSet
     public partial class Form1 : Form
     {
         internal Nics NicObject = new Nics();
-        private List<Nics.Setting> SettingsList = new List<Nics.Setting>();
+        internal Settings Settings = new Settings();
 
         public Form1()
         {
@@ -72,7 +72,7 @@ namespace IpSet
             lstSettingsList.BeginUpdate();
             lstSettingsList.Items.Clear();
 
-            foreach (var s in SettingsList)
+            foreach (var s in Settings.SettingsList)
                 lstSettingsList.Items.Add(s.Name);
 
             lstSettingsList.EndUpdate();
@@ -80,40 +80,40 @@ namespace IpSet
 
         private void toolStripSaveButton_Click(object sender, EventArgs e)
         {
-            SettingsList[lstSettingsList.SelectedIndices[0]].Static[0] = radioStatic.Checked;
-            SettingsList[lstSettingsList.SelectedIndices[0]].Static[1] = radioAltStatic.Checked;
+            Settings.SettingsList[lstSettingsList.SelectedIndices[0]].Static[0] = radioStatic.Checked;
+            Settings.SettingsList[lstSettingsList.SelectedIndices[0]].Static[1] = radioAltStatic.Checked;
             if (tbIpAddress.Text != "")
-                SettingsList[lstSettingsList.SelectedIndices[0]].IpAddress[0] = tbIpAddress.Text;
+                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].IpAddress[0] = tbIpAddress.Text;
             if (tbSubnetMask.Text != "")
-                SettingsList[lstSettingsList.SelectedIndices[0]].Ipv4Mask[0] = tbSubnetMask.Text;
+                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].Ipv4Mask[0] = tbSubnetMask.Text;
             if (tbGateway.Text != "")
-                SettingsList[lstSettingsList.SelectedIndices[0]].Gateway[0] = tbGateway.Text;
+                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].Gateway[0] = tbGateway.Text;
             if (tbPriDNS.Text != "")
-                SettingsList[lstSettingsList.SelectedIndices[0]].DNS[0] = tbPriDNS.Text;
+                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].DNS[0] = tbPriDNS.Text;
             if (tbSecDNS.Text != "")
-                SettingsList[lstSettingsList.SelectedIndices[0]].DNS[1] = tbSecDNS.Text;
+                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].DNS[1] = tbSecDNS.Text;
 
-            Settings.SaveFile(SettingsList);
+            Settings.SaveFile(Settings.SettingsList);
         }
 
         private void toolStripNewButton_Click(object sender, EventArgs e)
         {
-            Nics.Setting n = new Nics.Setting();
+            Settings.Setting n = new Settings.Setting();
 
             n.Init();
             n.Name = "New entry";
-            n.num = SettingsList.Count;
+            n.num = Settings.SettingsList.Count;
             n.Static[0] = false;
             n.Static[1] = false;
 
-            SettingsList.Add(n);
+            Settings.SettingsList.Add(n);
 
             UpdateSettingsList();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Settings.OpenFile(SettingsList);
+            Settings.OpenFile(Settings.SettingsList);
             UpdateSettingsList();
         }
 
@@ -123,7 +123,7 @@ namespace IpSet
 
             if (lstSender.SelectedIndices.Count > 0)
             {
-                var newSetting = SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
+                var newSetting = Settings.SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
 
                 radioStatic.Checked = newSetting.Static[0];
                 radioDynamic.Checked = !radioStatic.Checked;
@@ -143,12 +143,12 @@ namespace IpSet
 
             var newname = e.Label;
 
-            Nics.Setting tempNic = SettingsList[lstSender.SelectedIndices[0]];
+            Settings.Setting tempNic = Settings.SettingsList[lstSender.SelectedIndices[0]];
             tempNic.Name = newname;
-            SettingsList[lstSender.SelectedIndices[0]] = tempNic;
+            Settings.SettingsList[lstSender.SelectedIndices[0]] = tempNic;
         }
 
-        private void lstSettingsList_BeforeLabelEdit(object sender, LabelEditEventArgs e)
+        private void toolStripSetButton_Click(object sender, EventArgs e)
         {
 
         }
