@@ -10,13 +10,13 @@ namespace IpSet
 {
     class Settings
     {
-        private static string SettingsFile = "testfile.txt";
+        private static string SettingsFile = "settings.txt";
 
         public struct Setting
         {
             public int num;
             public string Name;
-            public bool[] Static;
+            public bool[] DHCP;
             public string[] IpAddress;
             public string[] Ipv4Mask;
             public string[] Gateway;
@@ -25,9 +25,9 @@ namespace IpSet
             public void Init()
             {
                 Name = "";
-                Static = new bool[2];
-                IpAddress = new string[2];
-                Ipv4Mask = new string[2];
+                DHCP = new bool[1];
+                IpAddress = new string[1];
+                Ipv4Mask = new string[1];
                 Gateway = new string[2];
                 DNS = new string[2];
             }
@@ -43,11 +43,11 @@ namespace IpSet
             foreach (var s in settings)
             {
                 data += "[" + s.Name + "]\r\n";
+                data += "DHCP=" + s.DHCP + "\r\n";
                 if (s.IpAddress != null)
                 {
                     for (int i = 0; i < s.IpAddress.Length; i++)
                     {
-                        data += "Static " + (i + 1) + "=" + s.Static[i] + "\r\n";
                         data += "IP-address " + (i + 1) + "=" + s.IpAddress[i] + "\r\n";
                         data += "Subnet " + (i + 1) + "=" + s.Ipv4Mask[i] + "\r\n";
                     }
@@ -57,7 +57,7 @@ namespace IpSet
                     for (int i = 0; i < s.Gateway.Length; i++)
                         data += "Gateway " + (i + 1) + "=" + s.Gateway[i] + "\r\n";
                 }
-                if (s.Gateway != null)
+                if (s.DNS != null)
                 {
                     for (int i = 0; i < s.DNS.Length; i++)
                         data += "DNS " + (i + 1) + "=" + s.DNS[i] + "\r\n";
@@ -106,16 +106,10 @@ namespace IpSet
 
                 }
                 
-                if (data.StartsWith("Static 1"))
+                if (data.StartsWith("DHCP"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Static[0] = bool.Parse(data);
-                }
-
-                if (data.StartsWith("Static 2"))
-                {
-                    data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Static[1] = bool.Parse(data);
+                    n.DHCP[0] = bool.Parse(data);
                 }
 
                 if (data.StartsWith("IP-address 1"))
@@ -124,24 +118,24 @@ namespace IpSet
                     n.IpAddress[0] = data;
                 }
                 
-                if (data.StartsWith("IP-address 2"))
+/*                if (data.StartsWith("IP-address 2"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
                     n.IpAddress[1] = data;
                 }
-
+*/
                 if (data.StartsWith("Subnet 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
                     n.Ipv4Mask[0] = data;
                 }
-
+/*
                 if (data.StartsWith("Subnet 2"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
                     n.Ipv4Mask[1] = data;
                 }
-                
+*/                
                 if (data.StartsWith("Gateway 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);

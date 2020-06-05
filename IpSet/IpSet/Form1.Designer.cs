@@ -43,15 +43,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.radioAltStatic = new System.Windows.Forms.RadioButton();
-            this.radioAltDynamic = new System.Windows.Forms.RadioButton();
-            this.tbAltIpAddress = new IPAddressControlLib.IPAddressControl();
-            this.tbAltSubnetMask = new IPAddressControlLib.IPAddressControl();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tbAltGateway = new IPAddressControlLib.IPAddressControl();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tbPriDNS = new IPAddressControlLib.IPAddressControl();
             this.tbSecDNS = new IPAddressControlLib.IPAddressControl();
@@ -74,7 +65,6 @@
             this.flowLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -171,7 +161,6 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -246,120 +235,6 @@
             this.label2.Size = new System.Drawing.Size(69, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Subnet mask";
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.radioAltStatic);
-            this.tabPage2.Controls.Add(this.radioAltDynamic);
-            this.tabPage2.Controls.Add(this.tbAltIpAddress);
-            this.tabPage2.Controls.Add(this.tbAltSubnetMask);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.tbAltGateway);
-            this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label11);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(247, 116);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Alt";
-            // 
-            // radioAltStatic
-            // 
-            this.radioAltStatic.AutoSize = true;
-            this.radioAltStatic.Location = new System.Drawing.Point(118, 6);
-            this.radioAltStatic.Name = "radioAltStatic";
-            this.radioAltStatic.Size = new System.Drawing.Size(52, 17);
-            this.radioAltStatic.TabIndex = 10;
-            this.radioAltStatic.Text = "Static";
-            this.radioAltStatic.UseVisualStyleBackColor = true;
-            // 
-            // radioAltDynamic
-            // 
-            this.radioAltDynamic.AutoSize = true;
-            this.radioAltDynamic.Checked = true;
-            this.radioAltDynamic.Location = new System.Drawing.Point(9, 6);
-            this.radioAltDynamic.Name = "radioAltDynamic";
-            this.radioAltDynamic.Size = new System.Drawing.Size(66, 17);
-            this.radioAltDynamic.TabIndex = 11;
-            this.radioAltDynamic.TabStop = true;
-            this.radioAltDynamic.Text = "Dynamic";
-            this.radioAltDynamic.UseVisualStyleBackColor = true;
-            // 
-            // tbAltIpAddress
-            // 
-            this.tbAltIpAddress.AllowInternalTab = false;
-            this.tbAltIpAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAltIpAddress.AutoHeight = true;
-            this.tbAltIpAddress.BackColor = System.Drawing.SystemColors.Window;
-            this.tbAltIpAddress.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tbAltIpAddress.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbAltIpAddress.Location = new System.Drawing.Point(118, 29);
-            this.tbAltIpAddress.Name = "tbAltIpAddress";
-            this.tbAltIpAddress.ReadOnly = false;
-            this.tbAltIpAddress.Size = new System.Drawing.Size(123, 20);
-            this.tbAltIpAddress.TabIndex = 4;
-            this.tbAltIpAddress.Text = "...";
-            // 
-            // tbAltSubnetMask
-            // 
-            this.tbAltSubnetMask.AllowInternalTab = false;
-            this.tbAltSubnetMask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAltSubnetMask.AutoHeight = true;
-            this.tbAltSubnetMask.BackColor = System.Drawing.SystemColors.Window;
-            this.tbAltSubnetMask.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tbAltSubnetMask.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbAltSubnetMask.Location = new System.Drawing.Point(118, 55);
-            this.tbAltSubnetMask.Name = "tbAltSubnetMask";
-            this.tbAltSubnetMask.ReadOnly = false;
-            this.tbAltSubnetMask.Size = new System.Drawing.Size(123, 20);
-            this.tbAltSubnetMask.TabIndex = 5;
-            this.tbAltSubnetMask.Text = "...";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(6, 88);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Alt Gateway";
-            // 
-            // tbAltGateway
-            // 
-            this.tbAltGateway.AllowInternalTab = false;
-            this.tbAltGateway.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAltGateway.AutoHeight = true;
-            this.tbAltGateway.BackColor = System.Drawing.SystemColors.Window;
-            this.tbAltGateway.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tbAltGateway.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbAltGateway.Location = new System.Drawing.Point(118, 81);
-            this.tbAltGateway.Name = "tbAltGateway";
-            this.tbAltGateway.ReadOnly = false;
-            this.tbAltGateway.Size = new System.Drawing.Size(123, 20);
-            this.tbAltGateway.TabIndex = 6;
-            this.tbAltGateway.Text = "...";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(6, 36);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(72, 13);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Alt IP-address";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 62);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(84, 13);
-            this.label11.TabIndex = 9;
-            this.label11.Text = "Alt Subnet mask";
             // 
             // groupBox2
             // 
@@ -590,8 +465,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -630,7 +503,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripSaveButton;
         private System.Windows.Forms.ToolStripButton toolStripNewButton;
@@ -638,14 +510,6 @@
         private System.Windows.Forms.ToolStripButton toolStripSetButton;
         private System.Windows.Forms.RadioButton radioStatic;
         private System.Windows.Forms.RadioButton radioDynamic;
-        private IPAddressControlLib.IPAddressControl tbAltIpAddress;
-        private IPAddressControlLib.IPAddressControl tbAltSubnetMask;
-        private System.Windows.Forms.Label label4;
-        private IPAddressControlLib.IPAddressControl tbAltGateway;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.RadioButton radioAltStatic;
-        private System.Windows.Forms.RadioButton radioAltDynamic;
     }
 }
 

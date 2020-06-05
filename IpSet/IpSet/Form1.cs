@@ -45,26 +45,37 @@ namespace IpSet
 
             this.lbIpAddress.Text = "";
             this.lbIpAddressHeader.Text = "";
+            if (NicObject.NicList[cbSender.SelectedIndex].IpAddress != null)
+            {
+                for (int i = 0; i < NicObject.NicList[cbSender.SelectedIndex].IpAddress.Length; i++)
+                {
+                    this.lbIpAddress.Text += NicObject.NicList[cbSender.SelectedIndex].IpAddress[i] + "\n\r"
+                    + NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask[i] + "\n\r\n\r";
 
-            for (int i = 0; i < NicObject.NicList[cbSender.SelectedIndex].IpAddress.Length; i++)
-            { 
-                this.lbIpAddress.Text += NicObject.NicList[cbSender.SelectedIndex].IpAddress[i] + "\n\r"
-                + NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask[i] + "\n\r\n\r";
-
-                this.lbIpAddressHeader.Text += "IP-address " + (i + 1) + "\n\rSubnet mask " + (i + 1) + "\n\r\n\r";
+                    this.lbIpAddressHeader.Text += "IP-address " + (i + 1) + "\n\rSubnet mask " + (i + 1) + "\n\r\n\r";
+                }
             }
 
-            this.lbGateway.Text = NicObject.NicList[cbSender.SelectedIndex].Gateway[0];
+            if (NicObject.NicList[cbSender.SelectedIndex].Gateway != null)
+            {
+                for (int i = 0; i < NicObject.NicList[cbSender.SelectedIndex].Gateway.Length; i++)
+                {
+                    this.lbGateway.Text += NicObject.NicList[cbSender.SelectedIndex].Gateway[i] + "\r\n";
+                }
+            }
+            if (NicObject.NicList[cbSender.SelectedIndex].DNS != null)
+            {
+                if (NicObject.NicList[cbSender.SelectedIndex].DNS.Length > 0)
+                    this.lbPriDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[0];
+                else
+                    this.lbPriDNS.Text = "";
 
-            if (NicObject.NicList[cbSender.SelectedIndex].DNS.Length > 0)
-                this.lbPriDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[0];
-            else
-                this.lbPriDNS.Text = "";
-
-            if (NicObject.NicList[cbSender.SelectedIndex].DNS.Length > 1)
-                this.lbSecDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[1];
-            else
-                this.lbSecDNS.Text = "";
+                if (NicObject.NicList[cbSender.SelectedIndex].DNS.Length > 1)
+                    this.lbSecDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[1];
+                else
+                    this.lbSecDNS.Text = "";
+            }
+            
         }
 
         private void UpdateSettingsList()
@@ -80,18 +91,19 @@ namespace IpSet
 
         private void toolStripSaveButton_Click(object sender, EventArgs e)
         {
-            Settings.SettingsList[lstSettingsList.SelectedIndices[0]].Static[0] = radioStatic.Checked;
-            Settings.SettingsList[lstSettingsList.SelectedIndices[0]].Static[1] = radioAltStatic.Checked;
+            int index = lstSettingsList.SelectedIndices[0];
+            if (radioDynamic.Checked)
+                Settings.SettingsList[index].DHCP[0] = radioDynamic.Checked;
             if (tbIpAddress.Text != "")
-                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].IpAddress[0] = tbIpAddress.Text;
+                Settings.SettingsList[index].IpAddress[0] = tbIpAddress.Text;
             if (tbSubnetMask.Text != "")
-                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].Ipv4Mask[0] = tbSubnetMask.Text;
+                Settings.SettingsList[index].Ipv4Mask[0] = tbSubnetMask.Text;
             if (tbGateway.Text != "")
-                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].Gateway[0] = tbGateway.Text;
+                Settings.SettingsList[index].Gateway[0] = tbGateway.Text;
             if (tbPriDNS.Text != "")
-                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].DNS[0] = tbPriDNS.Text;
+                Settings.SettingsList[index].DNS[0] = tbPriDNS.Text;
             if (tbSecDNS.Text != "")
-                Settings.SettingsList[lstSettingsList.SelectedIndices[0]].DNS[1] = tbSecDNS.Text;
+                Settings.SettingsList[index].DNS[1] = tbSecDNS.Text;
 
             Settings.SaveFile(Settings.SettingsList);
         }
@@ -103,8 +115,7 @@ namespace IpSet
             n.Init();
             n.Name = "New entry";
             n.num = Settings.SettingsList.Count;
-            n.Static[0] = false;
-            n.Static[1] = false;
+            n.DHCP[0] = false;
 
             Settings.SettingsList.Add(n);
 
@@ -125,10 +136,8 @@ namespace IpSet
             {
                 var newSetting = Settings.SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
 
-                radioStatic.Checked = newSetting.Static[0];
-                radioDynamic.Checked = !radioStatic.Checked;
-                radioAltStatic.Checked = newSetting.Static[1];
-                radioAltDynamic.Checked = !radioAltStatic.Checked;
+                radioStatic.Checked = !newSetting.DHCP[0];
+                radioDynamic.Checked = newSetting.DHCP[0];
                 tbIpAddress.Text = (newSetting.IpAddress != null) ? newSetting.IpAddress[0] : "";
                 tbSubnetMask.Text = (newSetting.Ipv4Mask != null) ? newSetting.Ipv4Mask[0] : "";
                 tbGateway.Text = (newSetting.Gateway != null) ? newSetting.Gateway[0] : "";
@@ -150,7 +159,36 @@ namespace IpSet
 
         private void toolStripSetButton_Click(object sender, EventArgs e)
         {
+            //System.Management.ManagementBaseObject result;
+            Settings.Setting n = new Settings.Setting();
+            n.Init();
 
+            n.IpAddress = new string[1];
+            n.Ipv4Mask = new string[1];
+            n.Gateway = new string[1];
+             
+            n.DHCP[0] = radioDynamic.Checked;
+            n.IpAddress[0] = tbIpAddress.Text;
+            n.Ipv4Mask[0] = tbSubnetMask.Text;
+            n.Gateway[0] = tbGateway.Text;
+
+
+            n.DNS[0] = tbPriDNS.Text;
+            n.DNS[1] = tbSecDNS.Text;
+
+
+
+            try
+            {
+                NicObject.SetNicInfo(NicObject.GetDeviceIDFromNum(cbNics.SelectedIndex), n);
+            }
+            catch(Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+
+
+//            MessageBox.Show((string) result["IPAddress"]);
         }
     }
 }
