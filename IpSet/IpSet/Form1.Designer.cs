@@ -38,8 +38,6 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.radioStatic = new System.Windows.Forms.RadioButton();
-            this.radioDynamic = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -49,18 +47,15 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lbGateway = new System.Windows.Forms.Label();
-            this.lbIpAddress = new System.Windows.Forms.Label();
-            this.lbSecDNS = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.lbPriDNS = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lbIpAddressHeader = new System.Windows.Forms.Label();
+            this.lbInfoTextBox = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripNewButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSetButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripReloadButton = new System.Windows.Forms.ToolStripButton();
+            this.checkBox_DHCP = new System.Windows.Forms.CheckBox();
+            this.checkBox_DynamicDNS = new System.Windows.Forms.CheckBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -76,7 +71,7 @@
             this.flowLayoutPanel1.Controls.Add(this.lstSettingsList);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 28);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(206, 432);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(206, 460);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // cbNics
@@ -96,7 +91,7 @@
             this.lstSettingsList.Location = new System.Drawing.Point(3, 30);
             this.lstSettingsList.MultiSelect = false;
             this.lstSettingsList.Name = "lstSettingsList";
-            this.lstSettingsList.Size = new System.Drawing.Size(200, 396);
+            this.lstSettingsList.Size = new System.Drawing.Size(200, 430);
             this.lstSettingsList.TabIndex = 1;
             this.lstSettingsList.UseCompatibleStateImageBehavior = false;
             this.lstSettingsList.View = System.Windows.Forms.View.List;
@@ -155,7 +150,7 @@
             this.flowLayoutPanel2.Controls.Add(this.groupBox3);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(224, 28);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(264, 432);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(264, 460);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // tabControl1
@@ -164,13 +159,12 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(255, 142);
+            this.tabControl1.Size = new System.Drawing.Size(255, 134);
             this.tabControl1.TabIndex = 4;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.radioStatic);
-            this.tabPage1.Controls.Add(this.radioDynamic);
+            this.tabPage1.Controls.Add(this.checkBox_DHCP);
             this.tabPage1.Controls.Add(this.tbIpAddress);
             this.tabPage1.Controls.Add(this.tbSubnetMask);
             this.tabPage1.Controls.Add(this.label3);
@@ -180,31 +174,9 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(247, 116);
+            this.tabPage1.Size = new System.Drawing.Size(247, 108);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pri";
-            // 
-            // radioStatic
-            // 
-            this.radioStatic.AutoSize = true;
-            this.radioStatic.Location = new System.Drawing.Point(118, 6);
-            this.radioStatic.Name = "radioStatic";
-            this.radioStatic.Size = new System.Drawing.Size(52, 17);
-            this.radioStatic.TabIndex = 4;
-            this.radioStatic.Text = "Static";
-            this.radioStatic.UseVisualStyleBackColor = true;
-            // 
-            // radioDynamic
-            // 
-            this.radioDynamic.AutoSize = true;
-            this.radioDynamic.Checked = true;
-            this.radioDynamic.Location = new System.Drawing.Point(9, 6);
-            this.radioDynamic.Name = "radioDynamic";
-            this.radioDynamic.Size = new System.Drawing.Size(66, 17);
-            this.radioDynamic.TabIndex = 4;
-            this.radioDynamic.TabStop = true;
-            this.radioDynamic.Text = "Dynamic";
-            this.radioDynamic.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -238,14 +210,15 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBox_DynamicDNS);
             this.groupBox2.Controls.Add(this.tbPriDNS);
             this.groupBox2.Controls.Add(this.tbSecDNS);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(3, 151);
+            this.groupBox2.Location = new System.Drawing.Point(3, 143);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(255, 84);
+            this.groupBox2.Size = new System.Drawing.Size(255, 103);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "DNS settings";
@@ -259,7 +232,7 @@
             this.tbPriDNS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tbPriDNS.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbPriDNS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPriDNS.Location = new System.Drawing.Point(122, 21);
+            this.tbPriDNS.Location = new System.Drawing.Point(122, 41);
             this.tbPriDNS.Name = "tbPriDNS";
             this.tbPriDNS.ReadOnly = false;
             this.tbPriDNS.Size = new System.Drawing.Size(123, 20);
@@ -275,7 +248,7 @@
             this.tbSecDNS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tbSecDNS.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbSecDNS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.tbSecDNS.Location = new System.Drawing.Point(122, 49);
+            this.tbSecDNS.Location = new System.Drawing.Point(122, 69);
             this.tbSecDNS.Name = "tbSecDNS";
             this.tbSecDNS.ReadOnly = false;
             this.tbSecDNS.Size = new System.Drawing.Size(123, 20);
@@ -286,7 +259,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 58);
+            this.label5.Location = new System.Drawing.Point(6, 78);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(84, 13);
             this.label5.TabIndex = 3;
@@ -296,7 +269,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 30);
+            this.label6.Location = new System.Drawing.Point(6, 50);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(67, 13);
             this.label6.TabIndex = 3;
@@ -304,115 +277,33 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.lbGateway);
-            this.groupBox3.Controls.Add(this.lbIpAddress);
-            this.groupBox3.Controls.Add(this.lbSecDNS);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.lbPriDNS);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.lbIpAddressHeader);
+            this.groupBox3.Controls.Add(this.lbInfoTextBox);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(3, 241);
+            this.groupBox3.Location = new System.Drawing.Point(3, 252);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(255, 185);
+            this.groupBox3.Size = new System.Drawing.Size(255, 208);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Actual settings";
             // 
-            // lbGateway
+            // lbInfoTextBox
             // 
-            this.lbGateway.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lbGateway.AutoSize = true;
-            this.lbGateway.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbGateway.Location = new System.Drawing.Point(101, 102);
-            this.lbGateway.Name = "lbGateway";
-            this.lbGateway.Size = new System.Drawing.Size(28, 13);
-            this.lbGateway.TabIndex = 3;
-            this.lbGateway.Text = "Text";
-            // 
-            // lbIpAddress
-            // 
-            this.lbIpAddress.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lbIpAddress.AutoSize = true;
-            this.lbIpAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbIpAddress.Location = new System.Drawing.Point(101, 18);
-            this.lbIpAddress.Name = "lbIpAddress";
-            this.lbIpAddress.Size = new System.Drawing.Size(28, 13);
-            this.lbIpAddress.TabIndex = 3;
-            this.lbIpAddress.Text = "Text";
-            // 
-            // lbSecDNS
-            // 
-            this.lbSecDNS.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lbSecDNS.AutoSize = true;
-            this.lbSecDNS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbSecDNS.Location = new System.Drawing.Point(101, 141);
-            this.lbSecDNS.Name = "lbSecDNS";
-            this.lbSecDNS.Size = new System.Drawing.Size(28, 13);
-            this.lbSecDNS.TabIndex = 3;
-            this.lbSecDNS.Text = "Text";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 141);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(84, 13);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "Secondary DNS";
-            // 
-            // lbPriDNS
-            // 
-            this.lbPriDNS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbPriDNS.AutoSize = true;
-            this.lbPriDNS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbPriDNS.Location = new System.Drawing.Point(101, 128);
-            this.lbPriDNS.Name = "lbPriDNS";
-            this.lbPriDNS.Size = new System.Drawing.Size(28, 13);
-            this.lbPriDNS.TabIndex = 3;
-            this.lbPriDNS.Text = "Text";
-            // 
-            // label9
-            // 
-            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(6, 128);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(67, 13);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "Primary DNS";
-            // 
-            // label7
-            // 
-            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(6, 102);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(84, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Default gateway";
-            // 
-            // lbIpAddressHeader
-            // 
-            this.lbIpAddressHeader.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lbIpAddressHeader.AutoSize = true;
-            this.lbIpAddressHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbIpAddressHeader.Location = new System.Drawing.Point(6, 18);
-            this.lbIpAddressHeader.Name = "lbIpAddressHeader";
-            this.lbIpAddressHeader.Size = new System.Drawing.Size(57, 13);
-            this.lbIpAddressHeader.TabIndex = 3;
-            this.lbIpAddressHeader.Text = "IP-address";
+            this.lbInfoTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lbInfoTextBox.AutoSize = true;
+            this.lbInfoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbInfoTextBox.Location = new System.Drawing.Point(6, 21);
+            this.lbInfoTextBox.Name = "lbInfoTextBox";
+            this.lbInfoTextBox.Size = new System.Drawing.Size(42, 13);
+            this.lbInfoTextBox.TabIndex = 3;
+            this.lbInfoTextBox.Text = "Infotext";
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSaveButton,
             this.toolStripNewButton,
+            this.toolStripSeparator1,
+            this.toolStripReloadButton,
             this.toolStripSetButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -449,11 +340,48 @@
             this.toolStripSetButton.Text = "Set";
             this.toolStripSetButton.Click += new System.EventHandler(this.toolStripSetButton_Click);
             // 
+            // toolStripReloadButton
+            // 
+            this.toolStripReloadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripReloadButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripReloadButton.Image")));
+            this.toolStripReloadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripReloadButton.Name = "toolStripReloadButton";
+            this.toolStripReloadButton.Size = new System.Drawing.Size(47, 22);
+            this.toolStripReloadButton.Text = "Reload";
+            this.toolStripReloadButton.Click += new System.EventHandler(this.toolStripReloadButton_Click);
+            // 
+            // checkBox_DHCP
+            // 
+            this.checkBox_DHCP.AutoSize = true;
+            this.checkBox_DHCP.Location = new System.Drawing.Point(9, 7);
+            this.checkBox_DHCP.Name = "checkBox_DHCP";
+            this.checkBox_DHCP.Size = new System.Drawing.Size(56, 17);
+            this.checkBox_DHCP.TabIndex = 4;
+            this.checkBox_DHCP.Text = "DHCP";
+            this.checkBox_DHCP.UseVisualStyleBackColor = true;
+            this.checkBox_DHCP.CheckedChanged += new System.EventHandler(this.checkBox_DHCP_CheckedChanged);
+            // 
+            // checkBox_DynamicDNS
+            // 
+            this.checkBox_DynamicDNS.AutoSize = true;
+            this.checkBox_DynamicDNS.Location = new System.Drawing.Point(13, 21);
+            this.checkBox_DynamicDNS.Name = "checkBox_DynamicDNS";
+            this.checkBox_DynamicDNS.Size = new System.Drawing.Size(80, 20);
+            this.checkBox_DynamicDNS.TabIndex = 4;
+            this.checkBox_DynamicDNS.Text = "Dynamic";
+            this.checkBox_DynamicDNS.UseVisualStyleBackColor = true;
+            this.checkBox_DynamicDNS.CheckedChanged += new System.EventHandler(this.checkBox_DynamicDNS_CheckedChanged);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 475);
+            this.ClientSize = new System.Drawing.Size(502, 500);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -488,14 +416,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label lbIpAddress;
-        private System.Windows.Forms.Label lbSecDNS;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label lbPriDNS;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label lbIpAddressHeader;
-        private System.Windows.Forms.Label lbGateway;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lbInfoTextBox;
         private System.Windows.Forms.GroupBox groupBox2;
         private IPAddressControlLib.IPAddressControl tbPriDNS;
         private IPAddressControlLib.IPAddressControl tbSecDNS;
@@ -508,8 +429,10 @@
         private System.Windows.Forms.ToolStripButton toolStripNewButton;
         private System.Windows.Forms.ListView lstSettingsList;
         private System.Windows.Forms.ToolStripButton toolStripSetButton;
-        private System.Windows.Forms.RadioButton radioStatic;
-        private System.Windows.Forms.RadioButton radioDynamic;
+        private System.Windows.Forms.ToolStripButton toolStripReloadButton;
+        private System.Windows.Forms.CheckBox checkBox_DHCP;
+        private System.Windows.Forms.CheckBox checkBox_DynamicDNS;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

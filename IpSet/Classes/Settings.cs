@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.IO;
-using NetworkAdapter;
 
 namespace IpSet
 {
     class Settings
     {
-        private static string SettingsFile = "settings.txt";
+        private static readonly string SettingsFile = ".\\settings.txt";
 
         public struct Setting
         {
             public int num;
             public string Name;
-            public bool[] DHCP;
+            public bool DHCP;
+            public bool DynamicDNS;
             public string[] IpAddress;
             public string[] Ipv4Mask;
             public string[] Gateway;
@@ -25,7 +21,8 @@ namespace IpSet
             public void Init()
             {
                 Name = "";
-                DHCP = new bool[1];
+                //DHCP = new bool[1];
+                //DynamicDNS = new bool[1];
                 IpAddress = new string[1];
                 Ipv4Mask = new string[1];
                 Gateway = new string[2];
@@ -44,6 +41,7 @@ namespace IpSet
             {
                 data += "[" + s.Name + "]\r\n";
                 data += "DHCP=" + s.DHCP + "\r\n";
+                data += "DynamicDNS=" + s.DynamicDNS + "\r\n";
                 if (s.IpAddress != null)
                 {
                     for (int i = 0; i < s.IpAddress.Length; i++)
@@ -72,7 +70,6 @@ namespace IpSet
 
         public static void OpenFile(List<Setting> settings)
         {
-            string data = "";
             int index = 0;
 
             Setting n = new Setting();
@@ -82,9 +79,9 @@ namespace IpSet
 
             settings.Clear();
 
-            while(!file.EndOfStream)
+            while (!file.EndOfStream)
             {
-                data = file.ReadLine();
+                string data = file.ReadLine();
 
                 if (data.StartsWith("["))
                 {
@@ -102,14 +99,21 @@ namespace IpSet
 
                         n.Name = data;
                         n.num = index;
+                        data = "";
                     }
 
                 }
-                
+
                 if (data.StartsWith("DHCP"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.DHCP[0] = bool.Parse(data);
+                    n.DHCP = bool.Parse(data);
+                }
+
+                if (data.StartsWith("DynamicDNS"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.DynamicDNS = bool.Parse(data);
                 }
 
                 if (data.StartsWith("IP-address 1"))
@@ -117,25 +121,25 @@ namespace IpSet
                     data = data.Substring(data.LastIndexOf("=") + 1);
                     n.IpAddress[0] = data;
                 }
-                
-/*                if (data.StartsWith("IP-address 2"))
-                {
-                    data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.IpAddress[1] = data;
-                }
-*/
+
+                /*                if (data.StartsWith("IP-address 2"))
+                                {
+                                    data = data.Substring(data.LastIndexOf("=") + 1);
+                                    n.IpAddress[1] = data;
+                                }
+                */
                 if (data.StartsWith("Subnet 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
                     n.Ipv4Mask[0] = data;
                 }
-/*
-                if (data.StartsWith("Subnet 2"))
-                {
-                    data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Ipv4Mask[1] = data;
-                }
-*/                
+                /*
+                                if (data.StartsWith("Subnet 2"))
+                                {
+                                    data = data.Substring(data.LastIndexOf("=") + 1);
+                                    n.Ipv4Mask[1] = data;
+                                }
+                */
                 if (data.StartsWith("Gateway 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);

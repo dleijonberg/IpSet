@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetworkAdapter;
+using System;
 using System.Windows.Forms;
-using NetworkAdapter;
 
 namespace IpSet
 {
@@ -23,61 +16,92 @@ namespace IpSet
             // Populate controls
             // ComboBox for network adapters
             UpdateCbNicsList();
-            cbNics.SelectedIndexChanged += new EventHandler(cbNics_OnSelectedIndexChanged);
 
+            // Update info textbox
+            UpdateInfoText(cbNics.SelectedIndex);
+
+            // Create event handler for when user changes adapter in combobox
+            cbNics.SelectedIndexChanged += new EventHandler(cbNics_OnSelectedIndexChanged);
         }
 
-
+        //  Updates the NicInfo struct in class Nics as
+        //  updates the combobox with adapters
         public void UpdateCbNicsList()
         {
+            // Clear the existing list
             cbNics.Items.Clear();
+            // Update the Niclist in class Nics
+            NicObject.UpdateNicInfo();
 
+            // Add all adapters from NicList to the combo box
             foreach (var nic in NicObject.NicList)
             {
                 cbNics.Items.Add(nic.Name);
             }
-            cbNics.SelectedIndex = 0;
+
+            if (cbNics.Items.Count > 0)
+                cbNics.SelectedIndex = 0;
+
         }
 
+        //  Update Info textbox in UI
+        public void UpdateInfoText(int index)
+        {
+            // Clear text object first
+            this.lbInfoTextBox.Text = "";
+
+            // Check if adapter is connected
+            if (NicObject.NicList[index].NetEnabled)
+            {
+                // Add Ip-address(es) to textbox
+                if (NicObject.NicList[index].IpAddress != null)
+                {
+                    for (int i = 0; i < NicObject.NicList[index].IpAddress.Length; i++)
+                    {
+                        this.lbInfoTextBox.Text += "IP-address " + (i + 1) + ": " + NicObject.NicList[index].IpAddress[i] + "\n\r"
+                        + "Subnet mask " + (i + 1) + ": " + NicObject.NicList[index].Ipv4Mask[i] + "\n\r\n\r";
+                    }
+                }
+
+                // Add gateway(s) to textbox
+                if (NicObject.NicList[index].Gateway != null)
+                {
+                    for (int i = 0; i < NicObject.NicList[index].Gateway.Length; i++)
+                    {
+                        this.lbInfoTextBox.Text += "Gateway " + (i + 1) + ": " + NicObject.NicList[index].Gateway[i] + "\r\n";
+                    }
+                    this.lbInfoTextBox.Text += "\r\n";
+                }
+
+                // Add DNS to textbox
+                if (NicObject.NicList[index].DNS != null)
+                {
+                    if (NicObject.NicList[index].DNS.Length > 0)
+                    {
+                        this.lbInfoTextBox.Text += "Primary DNS: " + NicObject.NicList[index].DNS[0] + "\r\n";
+                    }
+
+                    if (NicObject.NicList[index].DNS.Length > 1)
+                    {
+                        this.lbInfoTextBox.Text += "Secondary DNS: " + NicObject.NicList[index].DNS[1] + "\r\n";
+                    }
+                }
+            }
+            else
+            {
+                // Adapter not connected
+                this.lbInfoTextBox.Text = "Adapter not connected";
+            }
+        }
+
+        // Event trigger when user changes adapter in combo box
         public void cbNics_OnSelectedIndexChanged(object sender, System.EventArgs e)
         {
             ComboBox cbSender = (ComboBox)sender;
-
-            this.lbIpAddress.Text = "";
-            this.lbIpAddressHeader.Text = "";
-            if (NicObject.NicList[cbSender.SelectedIndex].IpAddress != null)
-            {
-                for (int i = 0; i < NicObject.NicList[cbSender.SelectedIndex].IpAddress.Length; i++)
-                {
-                    this.lbIpAddress.Text += NicObject.NicList[cbSender.SelectedIndex].IpAddress[i] + "\n\r"
-                    + NicObject.NicList[cbSender.SelectedIndex].Ipv4Mask[i] + "\n\r\n\r";
-
-                    this.lbIpAddressHeader.Text += "IP-address " + (i + 1) + "\n\rSubnet mask " + (i + 1) + "\n\r\n\r";
-                }
-            }
-
-            if (NicObject.NicList[cbSender.SelectedIndex].Gateway != null)
-            {
-                for (int i = 0; i < NicObject.NicList[cbSender.SelectedIndex].Gateway.Length; i++)
-                {
-                    this.lbGateway.Text += NicObject.NicList[cbSender.SelectedIndex].Gateway[i] + "\r\n";
-                }
-            }
-            if (NicObject.NicList[cbSender.SelectedIndex].DNS != null)
-            {
-                if (NicObject.NicList[cbSender.SelectedIndex].DNS.Length > 0)
-                    this.lbPriDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[0];
-                else
-                    this.lbPriDNS.Text = "";
-
-                if (NicObject.NicList[cbSender.SelectedIndex].DNS.Length > 1)
-                    this.lbSecDNS.Text = NicObject.NicList[cbSender.SelectedIndex].DNS[1];
-                else
-                    this.lbSecDNS.Text = "";
-            }
-            
+            UpdateInfoText(cbSender.SelectedIndex);
         }
 
+        // Update the list of settings
         private void UpdateSettingsList()
         {
             lstSettingsList.BeginUpdate();
@@ -92,18 +116,18 @@ namespace IpSet
         private void toolStripSaveButton_Click(object sender, EventArgs e)
         {
             int index = lstSettingsList.SelectedIndices[0];
-            if (radioDynamic.Checked)
-                Settings.SettingsList[index].DHCP[0] = radioDynamic.Checked;
-            if (tbIpAddress.Text != "")
-                Settings.SettingsList[index].IpAddress[0] = tbIpAddress.Text;
-            if (tbSubnetMask.Text != "")
-                Settings.SettingsList[index].Ipv4Mask[0] = tbSubnetMask.Text;
-            if (tbGateway.Text != "")
-                Settings.SettingsList[index].Gateway[0] = tbGateway.Text;
-            if (tbPriDNS.Text != "")
-                Settings.SettingsList[index].DNS[0] = tbPriDNS.Text;
-            if (tbSecDNS.Text != "")
-                Settings.SettingsList[index].DNS[1] = tbSecDNS.Text;
+
+            Settings.SettingsList[index] = new Settings.Setting
+            {
+                DHCP = checkBox_DHCP.Checked,
+                DynamicDNS = checkBox_DynamicDNS.Checked,
+            };
+
+            Settings.SettingsList[index].IpAddress[0] = tbIpAddress.Text;
+            Settings.SettingsList[index].Ipv4Mask[0] = tbSubnetMask.Text;
+            Settings.SettingsList[index].Gateway[0] = tbGateway.Text;
+            Settings.SettingsList[index].DNS[0] = tbPriDNS.Text;
+            Settings.SettingsList[index].DNS[1] = tbSecDNS.Text;
 
             Settings.SaveFile(Settings.SettingsList);
         }
@@ -115,7 +139,7 @@ namespace IpSet
             n.Init();
             n.Name = "New entry";
             n.num = Settings.SettingsList.Count;
-            n.DHCP[0] = false;
+            n.DHCP = false;
 
             Settings.SettingsList.Add(n);
 
@@ -128,6 +152,7 @@ namespace IpSet
             UpdateSettingsList();
         }
 
+        // Event trigger when user clicks on a setting in the list
         private void lstSettingsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ListView lstSender = (ListView)sender;
@@ -136,8 +161,7 @@ namespace IpSet
             {
                 var newSetting = Settings.SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
 
-                radioStatic.Checked = !newSetting.DHCP[0];
-                radioDynamic.Checked = newSetting.DHCP[0];
+                checkBox_DHCP.Checked = newSetting.DHCP;
                 tbIpAddress.Text = (newSetting.IpAddress != null) ? newSetting.IpAddress[0] : "";
                 tbSubnetMask.Text = (newSetting.Ipv4Mask != null) ? newSetting.Ipv4Mask[0] : "";
                 tbGateway.Text = (newSetting.Gateway != null) ? newSetting.Gateway[0] : "";
@@ -146,6 +170,7 @@ namespace IpSet
             }
         }
 
+        // Event trigger when user changed name on a setting in the list
         private void lstSettingsList_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
             ListView lstSender = (ListView)sender;
@@ -166,13 +191,13 @@ namespace IpSet
             n.IpAddress = new string[1];
             n.Ipv4Mask = new string[1];
             n.Gateway = new string[1];
-             
-            n.DHCP[0] = radioDynamic.Checked;
+
+            n.DHCP = checkBox_DHCP.Checked;
             n.IpAddress[0] = tbIpAddress.Text;
             n.Ipv4Mask[0] = tbSubnetMask.Text;
             n.Gateway[0] = tbGateway.Text;
 
-
+            n.DynamicDNS = checkBox_DynamicDNS.Checked;
             n.DNS[0] = tbPriDNS.Text;
             n.DNS[1] = tbSecDNS.Text;
 
@@ -182,13 +207,58 @@ namespace IpSet
             {
                 NicObject.SetNicInfo(NicObject.GetDeviceIDFromNum(cbNics.SelectedIndex), n);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
             }
 
+            NicObject.UpdateNicInfo();
+            UpdateInfoText(cbNics.SelectedIndex);
+            //            MessageBox.Show((string) result["IPAddress"]);
+        }
 
-//            MessageBox.Show((string) result["IPAddress"]);
+        private void toolStripReloadButton_Click(object sender, EventArgs e)
+        {
+            UpdateCbNicsList();
+        }
+
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            UpdateInfoText(cbNics.SelectedIndex);
+        }
+
+        private void checkBox_DHCP_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox s = (CheckBox)sender;
+            if (s.Checked)
+            {
+                tbIpAddress.Enabled = false;
+                tbSubnetMask.Enabled = false;
+                tbGateway.Enabled = false;
+                checkBox_DynamicDNS.Enabled = true;
+            }
+            if (!s.Checked)
+            {
+                tbIpAddress.Enabled = true;
+                tbSubnetMask.Enabled = true;
+                tbGateway.Enabled = true;
+                checkBox_DynamicDNS.Enabled = false;
+            }
+        }
+
+        private void checkBox_DynamicDNS_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox s = (CheckBox)sender;
+            if (s.Checked)
+            {
+                tbPriDNS.Enabled = false;
+                tbSecDNS.Enabled = false;
+            }
+            if (!s.Checked)
+            {
+                tbPriDNS.Enabled = true;
+                tbSecDNS.Enabled = true;
+            }
         }
     }
 }
