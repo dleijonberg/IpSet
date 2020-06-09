@@ -12,6 +12,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# User-specified subfolders
+CIMObjects\
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
