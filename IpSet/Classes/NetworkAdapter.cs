@@ -33,7 +33,6 @@ namespace NetworkAdapter
             public string Description;
             public bool NetEnabled;
             public bool DHCP;
-            //public bool DynamicDNS;
             public string[] IpAddress;
             public string[] SubnetMask;
             public string[] Gateway;

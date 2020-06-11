@@ -217,7 +217,7 @@ namespace IpSet
             UpdateCbNicsList();
         }
 
-         private void checkBox_DHCP_CheckedChanged(object sender, EventArgs e)
+        private void checkBox_DHCP_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox s = (CheckBox)sender;
             if (s.Checked)
