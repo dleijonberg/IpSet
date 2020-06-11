@@ -35,7 +35,7 @@ namespace NetworkAdapter
             public bool DHCP;
             //public bool DynamicDNS;
             public string[] IpAddress;
-            public string[] Ipv4Mask;
+            public string[] SubnetMask;
             public string[] Gateway;
             public string[] DNS;
         }
@@ -71,7 +71,7 @@ namespace NetworkAdapter
                     // Get IP info from that configuration
                     n.DHCP = (bool)mo.GetPropertyValue("DHCPEnabled");
                     n.IpAddress = (string[])mo.GetPropertyValue("IPAddress");
-                    n.Ipv4Mask = (string[])mo.GetPropertyValue("IPSubnet");
+                    n.SubnetMask = (string[])mo.GetPropertyValue("IPSubnet");
                     n.Gateway = (string[])mo.GetPropertyValue("DefaultIPGateway");
                     n.DNS = (string[])mo.GetPropertyValue("DNSServerSearchOrder");
 
@@ -84,23 +84,33 @@ namespace NetworkAdapter
         //  Sets adapter configuration on the specified network adapter by DeviceID
         public void SetNicInfo(string DeviceID, IpSet.Settings.Setting setting)
         {
-
             // Fetch the adapter component we want to change
             ManagementObject mo = new ManagementObject("Win32_NetworkAdapterConfiguration.Index=" + DeviceID);
 
             // Check if DHCP is off, if so set static IP
             if (!setting.DHCP)
             {
-                if (setting.IpAddress != null)
+                if (setting.Ipv4Address != null)
                 {
-                    object[] args = new object[2] { setting.IpAddress, setting.Ipv4Mask };
+                    string[] addr = new string[2] { setting.Ipv4Address, "" };
+                    string[] mask = new string[2] { setting.Ipv4Mask, "" };
+
+                    if (setting.Ipv6Address != null)
+                    {
+                        addr[1] = setting.Ipv6Address;
+                        mask[1] = setting.Ipv6Mask;
+                    } 
+
+                    object[] args = new object[2] { addr, mask };
                     mo.InvokeMethod("EnableStatic", args);
                 }
+
                 if (setting.Gateway != null)
                 {
                     object[] args = new object[1] { setting.Gateway };
                     mo.InvokeMethod("SetGateways", args);
                 }
+ 
                 if (setting.DNS != null)
                 {
                     object[] args = new object[1] { setting.DNS };
@@ -113,7 +123,7 @@ namespace NetworkAdapter
                 if (setting.DynamicDNS)
                 {
                     object[] args = new object[1] { false };
-                    mo.InvokeMethod("SetDynamicDNSRegistration", args);
+                    var result = mo.InvokeMethod("SetDynamicDNSRegistration", args);
                 }
                 else
                 {

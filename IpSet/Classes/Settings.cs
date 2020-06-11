@@ -13,18 +13,28 @@ namespace IpSet
             public string Name;
             public bool DHCP;
             public bool DynamicDNS;
-            public string[] IpAddress;
-            public string[] Ipv4Mask;
+            public string Ipv4Address;
+            public string Ipv4Mask;
+            public string Ipv6Address;
+            public string Ipv6Mask;
             public string[] Gateway;
             public string[] DNS;
 
             public void Init()
             {
                 Name = "";
-                //DHCP = new bool[1];
-                //DynamicDNS = new bool[1];
-                IpAddress = new string[1];
-                Ipv4Mask = new string[1];
+                DHCP = false;
+                DynamicDNS = false;
+                Ipv4Address = "";
+                Ipv4Mask = "";
+                Ipv6Address = "";
+                Ipv6Mask = "";
+                Gateway = new string[2];
+                DNS = new string[2];
+            }
+
+            public void InitArrays()
+            {
                 Gateway = new string[2];
                 DNS = new string[2];
             }
@@ -42,13 +52,15 @@ namespace IpSet
                 data += "[" + s.Name + "]\r\n";
                 data += "DHCP=" + s.DHCP + "\r\n";
                 data += "DynamicDNS=" + s.DynamicDNS + "\r\n";
-                if (s.IpAddress != null)
+                if (s.Ipv4Address != null)
                 {
-                    for (int i = 0; i < s.IpAddress.Length; i++)
-                    {
-                        data += "IP-address " + (i + 1) + "=" + s.IpAddress[i] + "\r\n";
-                        data += "Subnet " + (i + 1) + "=" + s.Ipv4Mask[i] + "\r\n";
-                    }
+                    data += "Ipv4-address=" + s.Ipv4Address + "\r\n";
+                    data += "Ipv4-subnet=" + s.Ipv4Mask + "\r\n";
+                }
+                if (s.Ipv6Address != null)
+                {
+                    data += "Ipv6-address=" + s.Ipv6Address + "\r\n";
+                    data += "Ipv6-subnet=" + s.Ipv6Mask + "\r\n";
                 }
                 if (s.Gateway != null)
                 {
@@ -72,9 +84,9 @@ namespace IpSet
         {
             int index = 0;
 
-            Setting n = new Setting();
             StreamReader file = new StreamReader(SettingsFile);
 
+            Setting n = new Setting();
             n.Init();
 
             settings.Clear();
@@ -83,14 +95,15 @@ namespace IpSet
             {
                 string data = file.ReadLine();
 
+
                 if (data.StartsWith("["))
                 {
                     if (data == "[End]")
                     {
                         settings.Add(n);
+                        index++;
 
                         n.Init();
-                        index++;
                     }
                     else
                     {
@@ -116,30 +129,30 @@ namespace IpSet
                     n.DynamicDNS = bool.Parse(data);
                 }
 
-                if (data.StartsWith("IP-address 1"))
+                if (data.StartsWith("Ipv4-address"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.IpAddress[0] = data;
+                    n.Ipv4Address = data;
                 }
 
-                /*                if (data.StartsWith("IP-address 2"))
-                                {
-                                    data = data.Substring(data.LastIndexOf("=") + 1);
-                                    n.IpAddress[1] = data;
-                                }
-                */
-                if (data.StartsWith("Subnet 1"))
+                if (data.StartsWith("Ipv6-address"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Ipv4Mask[0] = data;
+                    n.Ipv6Address = data;
                 }
-                /*
-                                if (data.StartsWith("Subnet 2"))
-                                {
-                                    data = data.Substring(data.LastIndexOf("=") + 1);
-                                    n.Ipv4Mask[1] = data;
-                                }
-                */
+
+                if (data.StartsWith("Ipv4-subnet"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Ipv4Mask = data;
+                }
+
+                if (data.StartsWith("Ipv6-subnet"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Ipv6Mask = data;
+                }
+
                 if (data.StartsWith("Gateway 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);

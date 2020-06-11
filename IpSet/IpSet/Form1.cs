@@ -59,7 +59,7 @@ namespace IpSet
                     for (int i = 0; i < NicObject.NicList[index].IpAddress.Length; i++)
                     {
                         this.lbInfoTextBox.Text += "IP-address " + (i + 1) + ": " + NicObject.NicList[index].IpAddress[i] + "\n\r"
-                        + "Subnet mask " + (i + 1) + ": " + NicObject.NicList[index].Ipv4Mask[i] + "\n\r\n\r";
+                        + "Subnet mask " + (i + 1) + ": " + NicObject.NicList[index].SubnetMask[i] + "\n\r\n\r";
                     }
                 }
 
@@ -119,15 +119,14 @@ namespace IpSet
 
             Settings.SettingsList[index] = new Settings.Setting
             {
+                Name = lstSettingsList.SelectedItems[index].Text,
                 DHCP = checkBox_DHCP.Checked,
                 DynamicDNS = checkBox_DynamicDNS.Checked,
+                Ipv4Address = tbIpAddress.Text,
+                Ipv4Mask = tbSubnetMask.Text,
+                Gateway = new string[1] { tbGateway.Text },
+                DNS = new string[2] { tbPriDNS.Text, tbSecDNS.Text }
             };
-
-            Settings.SettingsList[index].IpAddress[0] = tbIpAddress.Text;
-            Settings.SettingsList[index].Ipv4Mask[0] = tbSubnetMask.Text;
-            Settings.SettingsList[index].Gateway[0] = tbGateway.Text;
-            Settings.SettingsList[index].DNS[0] = tbPriDNS.Text;
-            Settings.SettingsList[index].DNS[1] = tbSecDNS.Text;
 
             Settings.SaveFile(Settings.SettingsList);
         }
@@ -136,7 +135,6 @@ namespace IpSet
         {
             Settings.Setting n = new Settings.Setting();
 
-            n.Init();
             n.Name = "New entry";
             n.num = Settings.SettingsList.Count;
             n.DHCP = false;
@@ -162,8 +160,9 @@ namespace IpSet
                 var newSetting = Settings.SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
 
                 checkBox_DHCP.Checked = newSetting.DHCP;
-                tbIpAddress.Text = (newSetting.IpAddress != null) ? newSetting.IpAddress[0] : "";
-                tbSubnetMask.Text = (newSetting.Ipv4Mask != null) ? newSetting.Ipv4Mask[0] : "";
+                checkBox_DynamicDNS.Checked = newSetting.DynamicDNS;
+                tbIpAddress.Text = (newSetting.Ipv4Address != null) ? newSetting.Ipv4Address : "";
+                tbSubnetMask.Text = (newSetting.Ipv4Mask != null) ? newSetting.Ipv4Mask : "";
                 tbGateway.Text = (newSetting.Gateway != null) ? newSetting.Gateway[0] : "";
                 tbPriDNS.Text = (newSetting.DNS != null) ? newSetting.DNS[0] : "";
                 tbSecDNS.Text = (newSetting.DNS != null && newSetting.DNS.Length > 1) ? newSetting.DNS[1] : "";
@@ -188,20 +187,16 @@ namespace IpSet
             Settings.Setting n = new Settings.Setting();
             n.Init();
 
-            n.IpAddress = new string[1];
-            n.Ipv4Mask = new string[1];
             n.Gateway = new string[1];
 
             n.DHCP = checkBox_DHCP.Checked;
-            n.IpAddress[0] = tbIpAddress.Text;
-            n.Ipv4Mask[0] = tbSubnetMask.Text;
+            n.Ipv4Address = tbIpAddress.Text;
+            n.Ipv4Mask = tbSubnetMask.Text;
             n.Gateway[0] = tbGateway.Text;
 
             n.DynamicDNS = checkBox_DynamicDNS.Checked;
             n.DNS[0] = tbPriDNS.Text;
             n.DNS[1] = tbSecDNS.Text;
-
-
 
             try
             {
@@ -222,12 +217,7 @@ namespace IpSet
             UpdateCbNicsList();
         }
 
-        private void RefreshButton_Click(object sender, EventArgs e)
-        {
-            UpdateInfoText(cbNics.SelectedIndex);
-        }
-
-        private void checkBox_DHCP_CheckedChanged(object sender, EventArgs e)
+         private void checkBox_DHCP_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox s = (CheckBox)sender;
             if (s.Checked)
