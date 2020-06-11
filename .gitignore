@@ -12,11 +12,6 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-# User-specified subfolders
-CIMObjects\
-NetworkAdapterTestConsole\
-
-
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
