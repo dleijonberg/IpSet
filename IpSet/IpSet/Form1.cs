@@ -119,12 +119,12 @@ namespace IpSet
 
             Settings.SettingsList[index] = new Settings.Setting
             {
-                Name = lstSettingsList.SelectedItems[index].Text,
+                Name = lstSettingsList.SelectedItems[0].Text,
                 DHCP = checkBox_DHCP.Checked,
                 DynamicDNS = checkBox_DynamicDNS.Checked,
                 Ipv4Address = tbIpAddress.Text,
                 Ipv4Mask = tbSubnetMask.Text,
-                Gateway = new string[1] { tbGateway.Text },
+                Gateway = tbGateway.Text,
                 DNS = new string[2] { tbPriDNS.Text, tbSecDNS.Text }
             };
 
@@ -163,7 +163,7 @@ namespace IpSet
                 checkBox_DynamicDNS.Checked = newSetting.DynamicDNS;
                 tbIpAddress.Text = (newSetting.Ipv4Address != null) ? newSetting.Ipv4Address : "";
                 tbSubnetMask.Text = (newSetting.Ipv4Mask != null) ? newSetting.Ipv4Mask : "";
-                tbGateway.Text = (newSetting.Gateway != null) ? newSetting.Gateway[0] : "";
+                tbGateway.Text = (newSetting.Gateway != null) ? newSetting.Gateway : "";
                 tbPriDNS.Text = (newSetting.DNS != null) ? newSetting.DNS[0] : "";
                 tbSecDNS.Text = (newSetting.DNS != null && newSetting.DNS.Length > 1) ? newSetting.DNS[1] : "";
             }
@@ -187,12 +187,12 @@ namespace IpSet
             Settings.Setting n = new Settings.Setting();
             n.Init();
 
-            n.Gateway = new string[1];
+            n.Gateway = "";
 
             n.DHCP = checkBox_DHCP.Checked;
             n.Ipv4Address = tbIpAddress.Text;
             n.Ipv4Mask = tbSubnetMask.Text;
-            n.Gateway[0] = tbGateway.Text;
+            n.Gateway = tbGateway.Text;
 
             n.DynamicDNS = checkBox_DynamicDNS.Checked;
             n.DNS[0] = tbPriDNS.Text;

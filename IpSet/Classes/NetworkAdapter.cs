@@ -94,12 +94,6 @@ namespace NetworkAdapter
                     string[] addr = new string[2] { setting.Ipv4Address, "" };
                     string[] mask = new string[2] { setting.Ipv4Mask, "" };
 
-                    if (setting.Ipv6Address != null)
-                    {
-                        addr[1] = setting.Ipv6Address;
-                        mask[1] = setting.Ipv6Mask;
-                    } 
-
                     object[] args = new object[2] { addr, mask };
                     mo.InvokeMethod("EnableStatic", args);
                 }
