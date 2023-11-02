@@ -7,17 +7,21 @@ namespace IpSet
     {
         private static readonly string SettingsFile = ".\\settings.txt";
 
+        public struct IpStruct
+        {
+            public string Address;
+            public string Mask;
+            public string Gateway;
+        }
+
         public struct Setting
         {
             public int num;
             public string Name;
             public bool DHCP;
+            public IpStruct[] Ipv4;
+            public IpStruct[] Ipv6;
             public bool DynamicDNS;
-            public string Ipv4Address;
-            public string Ipv4Mask;
-            public string Ipv6Address;
-            public string Ipv6Mask;
-            public string[] Gateway;
             public string[] DNS;
 
             public void Init()
@@ -25,17 +29,15 @@ namespace IpSet
                 Name = "";
                 DHCP = false;
                 DynamicDNS = false;
-                Ipv4Address = "";
-                Ipv4Mask = "";
-                Ipv6Address = "";
-                Ipv6Mask = "";
-                Gateway = new string[2];
+                Ipv4 = new IpStruct[2];
+                Ipv6 = new IpStruct[2];
                 DNS = new string[2];
             }
 
             public void InitArrays()
             {
-                Gateway = new string[2];
+                Ipv4 = new IpStruct[2];
+                Ipv6 = new IpStruct[2];
                 DNS = new string[2];
             }
         }
@@ -50,24 +52,35 @@ namespace IpSet
             foreach (var s in settings)
             {
                 data += "[" + s.Name + "]\r\n";
+
                 data += "DHCP=" + s.DHCP + "\r\n";
                 data += "DynamicDNS=" + s.DynamicDNS + "\r\n";
-                if (s.Ipv4Address != null)
+                if (s.Ipv4[0].Address != "")
                 {
-                    data += "Ipv4-address=" + s.Ipv4Address + "\r\n";
-                    data += "Ipv4-subnet=" + s.Ipv4Mask + "\r\n";
+                    data += "Ipv4-address 1=" + s.Ipv4[0].Address + "\r\n";
+                    data += "Ipv4-subnet 1=" + s.Ipv4[0].Mask + "\r\n";
+                    data += "Ipv4-gateway 1=" + s.Ipv4[0].Gateway + "\r\n";
                 }
-                if (s.Ipv6Address != null)
+                if (s.Ipv4[1].Address != "")
                 {
-                    data += "Ipv6-address=" + s.Ipv6Address + "\r\n";
-                    data += "Ipv6-subnet=" + s.Ipv6Mask + "\r\n";
+                    data += "Ipv4-address 2=" + s.Ipv4[1].Address + "\r\n";
+                    data += "Ipv4-subnet 2=" + s.Ipv4[1].Mask + "\r\n";
+                    data += "Ipv4-gateway 2=" + s.Ipv4[1].Gateway + "\r\n";
                 }
-                if (s.Gateway != null)
+                if (s.Ipv6[0].Address != "")
                 {
-                    for (int i = 0; i < s.Gateway.Length; i++)
-                        data += "Gateway " + (i + 1) + "=" + s.Gateway[i] + "\r\n";
+                    data += "Ipv6-address 1=" + s.Ipv6[0].Address + "\r\n";
+                    data += "Ipv6-subnet 1=" + s.Ipv6[0].Mask + "\r\n";
+                    data += "Ipv6-gateway 1=" + s.Ipv6[0].Gateway + "\r\n";
                 }
-                if (s.DNS != null)
+                if (s.Ipv6[1].Address != "")
+                {
+                    data += "Ipv6-address 2=" + s.Ipv6[1].Address + "\r\n";
+                    data += "Ipv6-subnet 2=" + s.Ipv6[1].Mask + "\r\n";
+                    data += "Ipv6-gateway 2=" + s.Ipv6[1].Gateway + "\r\n";
+                }
+
+                if (s.DNS[0] != "")
                 {
                     for (int i = 0; i < s.DNS.Length; i++)
                         data += "DNS " + (i + 1) + "=" + s.DNS[i] + "\r\n";
@@ -82,10 +95,17 @@ namespace IpSet
 
         public static void OpenFile(List<Setting> settings)
         {
+            // NIC index for ListView object
             int index = 0;
 
+            // Check if file exists. If not, create it and close it
+            if (!File.Exists(SettingsFile))
+                File.Create(SettingsFile).Close();
+
+            // Open the file as a stream
             StreamReader file = new StreamReader(SettingsFile);
 
+            // Create an instance for NIC settings to fill from loaded file
             Setting n = new Setting();
             n.Init();
 
@@ -95,7 +115,8 @@ namespace IpSet
             {
                 string data = file.ReadLine();
 
-
+                // Line has [] markers (either [End] or [NIC name])
+                // Each NIC setting begins with [Name] and ends with [End]
                 if (data.StartsWith("["))
                 {
                     if (data == "[End]")
@@ -106,7 +127,7 @@ namespace IpSet
                         n.Init();
                     }
                     else
-                    {
+                    { 
                         data = data.Replace("[", "");
                         data = data.Replace("]", "");
 
@@ -114,9 +135,9 @@ namespace IpSet
                         n.num = index;
                         data = "";
                     }
-
                 }
 
+                // Load settings from settings file
                 if (data.StartsWith("DHCP"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
@@ -129,42 +150,71 @@ namespace IpSet
                     n.DynamicDNS = bool.Parse(data);
                 }
 
-                if (data.StartsWith("Ipv4-address"))
+                if (data.StartsWith("Ipv4-address 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Ipv4Address = data;
+                    n.Ipv4[0].Address = data;
                 }
-
-                if (data.StartsWith("Ipv6-address"))
+                if (data.StartsWith("Ipv4-address 2"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Ipv6Address = data;
+                    n.Ipv4[1].Address = data;
                 }
-
-                if (data.StartsWith("Ipv4-subnet"))
+                if (data.StartsWith("Ipv4-subnet 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Ipv4Mask = data;
+                    n.Ipv4[0].Mask = data;
                 }
-
-                if (data.StartsWith("Ipv6-subnet"))
+                if (data.StartsWith("Ipv4-subnet 2"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Ipv6Mask = data;
+                    n.Ipv4[1].Mask = data;
                 }
-
-                if (data.StartsWith("Gateway 1"))
+                if (data.StartsWith("Ipv4-gateway 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Gateway[0] = data;
+                    n.Ipv4[0].Gateway = data;
                 }
-
-                if (data.StartsWith("Gateway 2"))
+                if (data.StartsWith("Ipv4-gateway 2"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);
-                    n.Gateway[1] = data;
+                    n.Ipv4[1].Gateway = data;
                 }
 
+
+                if (data.StartsWith("Ipv6-address 1"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Ipv6[0].Address = data;
+                }
+                if (data.StartsWith("Ipv6-address 2"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Ipv6[1].Address = data;
+                }
+                if (data.StartsWith("Ipv6-subnet 1"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Ipv6[0].Mask = data;
+                }
+                if (data.StartsWith("Ipv6-subnet 2"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Ipv6[1].Mask = data;
+                }
+                if (data.StartsWith("Ipv6-gateway 1"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Ipv6[0].Gateway = data;
+                }
+                if (data.StartsWith("Ipv6-gateway 2"))
+                {
+                    data = data.Substring(data.LastIndexOf("=") + 1);
+                    n.Ipv6[1].Gateway = data;
+                }
+
+
+                // DNS
                 if (data.StartsWith("DNS 1"))
                 {
                     data = data.Substring(data.LastIndexOf("=") + 1);

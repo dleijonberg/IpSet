@@ -38,10 +38,12 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBox_DHCP = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBox_DynamicDNS = new System.Windows.Forms.CheckBox();
             this.tbPriDNS = new IPAddressControlLib.IPAddressControl();
             this.tbSecDNS = new IPAddressControlLib.IPAddressControl();
             this.label5 = new System.Windows.Forms.Label();
@@ -51,11 +53,17 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripNewButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSetButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripReloadButton = new System.Windows.Forms.ToolStripButton();
-            this.checkBox_DHCP = new System.Windows.Forms.CheckBox();
-            this.checkBox_DynamicDNS = new System.Windows.Forms.CheckBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripReloadButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSetButton = new System.Windows.Forms.ToolStripButton();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.ipAddressControl1 = new IPAddressControlLib.IPAddressControl();
+            this.ipAddressControl2 = new IPAddressControlLib.IPAddressControl();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ipAddressControl3 = new IPAddressControlLib.IPAddressControl();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -63,6 +71,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -156,6 +165,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -177,6 +187,17 @@
             this.tabPage1.Size = new System.Drawing.Size(247, 108);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pri";
+            // 
+            // checkBox_DHCP
+            // 
+            this.checkBox_DHCP.AutoSize = true;
+            this.checkBox_DHCP.Location = new System.Drawing.Point(9, 7);
+            this.checkBox_DHCP.Name = "checkBox_DHCP";
+            this.checkBox_DHCP.Size = new System.Drawing.Size(56, 17);
+            this.checkBox_DHCP.TabIndex = 4;
+            this.checkBox_DHCP.Text = "DHCP";
+            this.checkBox_DHCP.UseVisualStyleBackColor = true;
+            this.checkBox_DHCP.CheckedChanged += new System.EventHandler(this.checkBox_DHCP_CheckedChanged);
             // 
             // label3
             // 
@@ -222,6 +243,17 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "DNS settings";
+            // 
+            // checkBox_DynamicDNS
+            // 
+            this.checkBox_DynamicDNS.AutoSize = true;
+            this.checkBox_DynamicDNS.Location = new System.Drawing.Point(13, 21);
+            this.checkBox_DynamicDNS.Name = "checkBox_DynamicDNS";
+            this.checkBox_DynamicDNS.Size = new System.Drawing.Size(79, 20);
+            this.checkBox_DynamicDNS.TabIndex = 4;
+            this.checkBox_DynamicDNS.Text = "Dynamic";
+            this.checkBox_DynamicDNS.UseVisualStyleBackColor = true;
+            this.checkBox_DynamicDNS.CheckedChanged += new System.EventHandler(this.checkBox_DynamicDNS_CheckedChanged);
             // 
             // tbPriDNS
             // 
@@ -314,6 +346,7 @@
             // toolStripSaveButton
             // 
             this.toolStripSaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSaveButton.Enabled = false;
             this.toolStripSaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSaveButton.Name = "toolStripSaveButton";
             this.toolStripSaveButton.Size = new System.Drawing.Size(35, 22);
@@ -330,15 +363,10 @@
             this.toolStripNewButton.Text = "New";
             this.toolStripNewButton.Click += new System.EventHandler(this.toolStripNewButton_Click);
             // 
-            // toolStripSetButton
+            // toolStripSeparator1
             // 
-            this.toolStripSetButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSetButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSetButton.Image")));
-            this.toolStripSetButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSetButton.Name = "toolStripSetButton";
-            this.toolStripSetButton.Size = new System.Drawing.Size(27, 22);
-            this.toolStripSetButton.Text = "Set";
-            this.toolStripSetButton.Click += new System.EventHandler(this.toolStripSetButton_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripReloadButton
             // 
@@ -350,32 +378,116 @@
             this.toolStripReloadButton.Text = "Reload";
             this.toolStripReloadButton.Click += new System.EventHandler(this.toolStripReloadButton_Click);
             // 
-            // checkBox_DHCP
+            // toolStripSetButton
             // 
-            this.checkBox_DHCP.AutoSize = true;
-            this.checkBox_DHCP.Location = new System.Drawing.Point(9, 7);
-            this.checkBox_DHCP.Name = "checkBox_DHCP";
-            this.checkBox_DHCP.Size = new System.Drawing.Size(56, 17);
-            this.checkBox_DHCP.TabIndex = 4;
-            this.checkBox_DHCP.Text = "DHCP";
-            this.checkBox_DHCP.UseVisualStyleBackColor = true;
-            this.checkBox_DHCP.CheckedChanged += new System.EventHandler(this.checkBox_DHCP_CheckedChanged);
+            this.toolStripSetButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSetButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSetButton.Image")));
+            this.toolStripSetButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSetButton.Name = "toolStripSetButton";
+            this.toolStripSetButton.Size = new System.Drawing.Size(27, 22);
+            this.toolStripSetButton.Text = "Set";
+            this.toolStripSetButton.Click += new System.EventHandler(this.toolStripSetButton_Click);
             // 
-            // checkBox_DynamicDNS
+            // tabPage2
             // 
-            this.checkBox_DynamicDNS.AutoSize = true;
-            this.checkBox_DynamicDNS.Location = new System.Drawing.Point(13, 21);
-            this.checkBox_DynamicDNS.Name = "checkBox_DynamicDNS";
-            this.checkBox_DynamicDNS.Size = new System.Drawing.Size(80, 20);
-            this.checkBox_DynamicDNS.TabIndex = 4;
-            this.checkBox_DynamicDNS.Text = "Dynamic";
-            this.checkBox_DynamicDNS.UseVisualStyleBackColor = true;
-            this.checkBox_DynamicDNS.CheckedChanged += new System.EventHandler(this.checkBox_DynamicDNS_CheckedChanged);
+            this.tabPage2.Controls.Add(this.checkBox1);
+            this.tabPage2.Controls.Add(this.ipAddressControl1);
+            this.tabPage2.Controls.Add(this.ipAddressControl2);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.ipAddressControl3);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(247, 108);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Sec";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // toolStripSeparator1
+            // checkBox1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(9, 7);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(56, 17);
+            this.checkBox1.TabIndex = 11;
+            this.checkBox1.Text = "DHCP";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // ipAddressControl1
+            // 
+            this.ipAddressControl1.AllowInternalTab = false;
+            this.ipAddressControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ipAddressControl1.AutoHeight = true;
+            this.ipAddressControl1.BackColor = System.Drawing.SystemColors.Window;
+            this.ipAddressControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ipAddressControl1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ipAddressControl1.Location = new System.Drawing.Point(118, 29);
+            this.ipAddressControl1.Name = "ipAddressControl1";
+            this.ipAddressControl1.ReadOnly = false;
+            this.ipAddressControl1.Size = new System.Drawing.Size(123, 20);
+            this.ipAddressControl1.TabIndex = 5;
+            this.ipAddressControl1.Text = "...";
+            // 
+            // ipAddressControl2
+            // 
+            this.ipAddressControl2.AllowInternalTab = false;
+            this.ipAddressControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ipAddressControl2.AutoHeight = true;
+            this.ipAddressControl2.BackColor = System.Drawing.SystemColors.Window;
+            this.ipAddressControl2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ipAddressControl2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ipAddressControl2.Location = new System.Drawing.Point(118, 55);
+            this.ipAddressControl2.Name = "ipAddressControl2";
+            this.ipAddressControl2.ReadOnly = false;
+            this.ipAddressControl2.Size = new System.Drawing.Size(123, 20);
+            this.ipAddressControl2.TabIndex = 6;
+            this.ipAddressControl2.Text = "...";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(6, 88);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(49, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Gateway";
+            // 
+            // ipAddressControl3
+            // 
+            this.ipAddressControl3.AllowInternalTab = false;
+            this.ipAddressControl3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ipAddressControl3.AutoHeight = true;
+            this.ipAddressControl3.BackColor = System.Drawing.SystemColors.Window;
+            this.ipAddressControl3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ipAddressControl3.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ipAddressControl3.Location = new System.Drawing.Point(118, 81);
+            this.ipAddressControl3.Name = "ipAddressControl3";
+            this.ipAddressControl3.ReadOnly = false;
+            this.ipAddressControl3.Size = new System.Drawing.Size(123, 20);
+            this.ipAddressControl3.TabIndex = 7;
+            this.ipAddressControl3.Text = "...";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(6, 36);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(57, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "IP-address";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(6, 62);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(69, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Subnet mask";
             // 
             // Form1
             // 
@@ -399,6 +511,8 @@
             this.groupBox3.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -433,6 +547,14 @@
         private System.Windows.Forms.CheckBox checkBox_DHCP;
         private System.Windows.Forms.CheckBox checkBox_DynamicDNS;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private IPAddressControlLib.IPAddressControl ipAddressControl1;
+        private IPAddressControlLib.IPAddressControl ipAddressControl2;
+        private System.Windows.Forms.Label label4;
+        private IPAddressControlLib.IPAddressControl ipAddressControl3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }
 

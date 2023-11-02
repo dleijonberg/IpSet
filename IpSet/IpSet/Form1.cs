@@ -115,16 +115,16 @@ namespace IpSet
 
         private void toolStripSaveButton_Click(object sender, EventArgs e)
         {
-            int index = lstSettingsList.SelectedIndices[0];
+            var index = lstSettingsList.SelectedIndices[0];
 
+            var Ipv4_1 = new Settings.IpStruct { Address = tbIpAddress.Text, Mask = tbSubnetMask.Text, Gateway = tbGateway.Text };
+            var Ipv4_2 = new Settings.IpStruct { Address = "", Mask = "", Gateway = "" };
             Settings.SettingsList[index] = new Settings.Setting
             {
-                Name = lstSettingsList.SelectedItems[index].Text,
+                Name = lstSettingsList.SelectedItems[0].Text,
                 DHCP = checkBox_DHCP.Checked,
                 DynamicDNS = checkBox_DynamicDNS.Checked,
-                Ipv4Address = tbIpAddress.Text,
-                Ipv4Mask = tbSubnetMask.Text,
-                Gateway = new string[1] { tbGateway.Text },
+                Ipv4 = new Settings.IpStruct[2] { Ipv4_1, Ipv4_2 },
                 DNS = new string[2] { tbPriDNS.Text, tbSecDNS.Text }
             };
 
@@ -157,15 +157,30 @@ namespace IpSet
 
             if (lstSender.SelectedIndices.Count > 0)
             {
-                var newSetting = Settings.SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
+                var index = lstSender.SelectedIndices[0];
+                var newSetting = Settings.SettingsList.Find(x => x.num == index);
 
                 checkBox_DHCP.Checked = newSetting.DHCP;
                 checkBox_DynamicDNS.Checked = newSetting.DynamicDNS;
-                tbIpAddress.Text = (newSetting.Ipv4Address != null) ? newSetting.Ipv4Address : "";
-                tbSubnetMask.Text = (newSetting.Ipv4Mask != null) ? newSetting.Ipv4Mask : "";
-                tbGateway.Text = (newSetting.Gateway != null) ? newSetting.Gateway[0] : "";
+                tbIpAddress.Text = (newSetting.Ipv4[0].Address != null) ? newSetting.Ipv4[0].Address : "";
+                tbSubnetMask.Text = (newSetting.Ipv4[0].Mask != null) ? newSetting.Ipv4[0].Mask : "";
+                tbGateway.Text = (newSetting.Ipv4[0].Gateway != null) ? newSetting.Ipv4[0].Gateway : "";
                 tbPriDNS.Text = (newSetting.DNS != null) ? newSetting.DNS[0] : "";
                 tbSecDNS.Text = (newSetting.DNS != null && newSetting.DNS.Length > 1) ? newSetting.DNS[1] : "";
+
+                toolStripSaveButton.Enabled = true;
+            }
+            else
+            {
+                checkBox_DHCP.Checked = false;
+                checkBox_DynamicDNS.Checked = false;
+                tbIpAddress.Text = "";
+                tbSubnetMask.Text = "";
+                tbGateway.Text = "";
+                tbPriDNS.Text = "";
+                tbSecDNS.Text = "";
+
+                toolStripSaveButton.Enabled = false;
             }
         }
 
@@ -187,12 +202,10 @@ namespace IpSet
             Settings.Setting n = new Settings.Setting();
             n.Init();
 
-            n.Gateway = new string[1];
-
             n.DHCP = checkBox_DHCP.Checked;
-            n.Ipv4Address = tbIpAddress.Text;
-            n.Ipv4Mask = tbSubnetMask.Text;
-            n.Gateway[0] = tbGateway.Text;
+            n.Ipv4[0].Address = tbIpAddress.Text;
+            n.Ipv4[0].Mask = tbSubnetMask.Text;
+            n.Ipv4[0].Gateway = tbGateway.Text;
 
             n.DynamicDNS = checkBox_DynamicDNS.Checked;
             n.DNS[0] = tbPriDNS.Text;
