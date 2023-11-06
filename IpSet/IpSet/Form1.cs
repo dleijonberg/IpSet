@@ -8,6 +8,7 @@ namespace IpSet
     {
         internal Nics NicObject = new Nics();
         internal Settings Settings = new Settings();
+        internal int SelectedSetting = -1;
 
         public Form1()
         {
@@ -89,8 +90,8 @@ namespace IpSet
             }
             else
             {
-                // Adapter not connected
-                this.lbInfoTextBox.Text = "Adapter not connected";
+                // Adapter reports not connected to a network
+                this.lbInfoTextBox.Text = "No connection";
             }
         }
 
@@ -113,11 +114,13 @@ namespace IpSet
             lstSettingsList.EndUpdate();
         }
 
+        // Save current settings to selected setting in settingslist
         private void toolStripSaveButton_Click(object sender, EventArgs e)
         {
-            int index = lstSettingsList.SelectedIndices[0];
+            //int index = lstSettingsList.SelectedIndices[0];
 
-            Settings.SettingsList[index] = new Settings.Setting
+            // Create new Settings.Setting and apply data to it
+            Settings.SettingsList[SelectedSetting] = new Settings.Setting
             {
                 Name = lstSettingsList.SelectedItems[0].Text,
                 DHCP = checkBox_DHCP.Checked,
@@ -128,15 +131,17 @@ namespace IpSet
                 DNS = new string[2] { tbPriDNS.Text, tbSecDNS.Text }
             };
 
+            // Save the settings file
             Settings.SaveFile(Settings.SettingsList);
         }
 
+        // Create new setting in settingslist
         private void toolStripNewButton_Click(object sender, EventArgs e)
         {
             Settings.Setting n = new Settings.Setting();
 
             n.Name = "New entry";
-            n.num = Settings.SettingsList.Count;
+            //n.num = Settings.SettingsList.Count;
             n.DHCP = false;
 
             Settings.SettingsList.Add(n);
@@ -144,10 +149,15 @@ namespace IpSet
             UpdateSettingsList();
         }
 
+        // Open settingsfile on load and update the settingslist
         private void Form1_Load(object sender, EventArgs e)
         {
             Settings.OpenFile(Settings.SettingsList);
             UpdateSettingsList();
+
+            // if DHCP is unchecked, Dynamic DNS should not be possible
+            if (!checkBox_DHCP.Checked)
+                checkBox_DynamicDNS.Enabled = false;
         }
 
         // Event trigger when user clicks on a setting in the list
@@ -155,10 +165,20 @@ namespace IpSet
         {
             ListView lstSender = (ListView)sender;
 
-            if (lstSender.SelectedIndices.Count > 0)
+            // If a setting is selected
+            if (lstSender.SelectedItems.Count > 0)
             {
-                var newSetting = Settings.SettingsList.Find(x => x.num == lstSender.SelectedIndices[0]);
+                // Update the selected settings memory
+                SelectedSetting = lstSender.SelectedItems[0].Index;
 
+                // Enable the address boxes
+                groupBox1.Enabled = true;
+                groupBox2.Enabled = true;
+
+                // Create a temporary setting instance to load settings from list
+                var newSetting = Settings.SettingsList[SelectedSetting];
+
+                // Update the address boxes with the loaded settings
                 checkBox_DHCP.Checked = newSetting.DHCP;
                 checkBox_DynamicDNS.Checked = newSetting.DynamicDNS;
                 tbIpAddress.Text = (newSetting.Ipv4Address != null) ? newSetting.Ipv4Address : "";
@@ -167,6 +187,23 @@ namespace IpSet
                 tbPriDNS.Text = (newSetting.DNS != null) ? newSetting.DNS[0] : "";
                 tbSecDNS.Text = (newSetting.DNS != null && newSetting.DNS.Length > 1) ? newSetting.DNS[1] : "";
             }
+            // If nothing is selected, we empty the address boxes and disable them
+            else
+            {
+                SelectedSetting = -1;
+                checkBox_DHCP.Checked = false;
+                checkBox_DynamicDNS.Checked = false;
+                tbIpAddress.Text = "";
+                tbSubnetMask.Text = "";
+                tbGateway.Text = "";
+                tbPriDNS.Text = "";
+                tbSecDNS.Text = "";
+
+                // Disable groupboxes for IP and DNS if nothing is selected
+                groupBox1.Enabled = false;
+                groupBox2.Enabled = false;
+            }
+
         }
 
         // Event trigger when user changed name on a setting in the list
@@ -176,28 +213,29 @@ namespace IpSet
 
             var newname = e.Label;
 
-            Settings.Setting tempNic = Settings.SettingsList[lstSender.SelectedIndices[0]];
+            Settings.Setting tempNic = Settings.SettingsList[SelectedSetting];
             tempNic.Name = newname;
-            Settings.SettingsList[lstSender.SelectedIndices[0]] = tempNic;
+            Settings.SettingsList[SelectedSetting] = tempNic;
         }
 
+        // Apply the selected settings to the NIC
         private void toolStripSetButton_Click(object sender, EventArgs e)
         {
-            //System.Management.ManagementBaseObject result;
+            // Create a settings instance for loading the settings from address boxes
             Settings.Setting n = new Settings.Setting();
             n.Init();
 
+            // Apply settings from address boxes
             n.Gateway = "";
-
             n.DHCP = checkBox_DHCP.Checked;
             n.Ipv4Address = tbIpAddress.Text;
             n.Ipv4Mask = tbSubnetMask.Text;
             n.Gateway = tbGateway.Text;
-
             n.DynamicDNS = checkBox_DynamicDNS.Checked;
             n.DNS[0] = tbPriDNS.Text;
             n.DNS[1] = tbSecDNS.Text;
 
+            // Apply settings to NIC
             try
             {
                 NicObject.SetNicInfo(NicObject.GetDeviceIDFromNum(cbNics.SelectedIndex), n);
@@ -207,19 +245,22 @@ namespace IpSet
                 MessageBox.Show(exc.Message);
             }
 
+            // Update the info box to show new settings
             NicObject.UpdateNicInfo();
             UpdateInfoText(cbNics.SelectedIndex);
-            //            MessageBox.Show((string) result["IPAddress"]);
         }
 
+        // Re-inventory connected NICs
         private void toolStripReloadButton_Click(object sender, EventArgs e)
         {
             UpdateCbNicsList();
         }
 
+        // Event trigger for when DHCP checkbox is changed
         private void checkBox_DHCP_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox s = (CheckBox)sender;
+            // Disable IP address boxes if DHCP is selected
             if (s.Checked)
             {
                 tbIpAddress.Enabled = false;
@@ -232,13 +273,17 @@ namespace IpSet
                 tbIpAddress.Enabled = true;
                 tbSubnetMask.Enabled = true;
                 tbGateway.Enabled = true;
+                checkBox_DynamicDNS.Checked = false;
                 checkBox_DynamicDNS.Enabled = false;
             }
         }
 
+        // Event trigger for when dynamic DNS is changed
         private void checkBox_DynamicDNS_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox s = (CheckBox)sender;
+
+            // Disable DNS textboxes if Dynamic DNS is selected
             if (s.Checked)
             {
                 tbPriDNS.Enabled = false;
@@ -249,6 +294,17 @@ namespace IpSet
                 tbPriDNS.Enabled = true;
                 tbSecDNS.Enabled = true;
             }
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            Settings.SettingsList.RemoveAt(SelectedSetting);
+            
+            // Save the settings file
+            Settings.SaveFile(Settings.SettingsList);
+
+            // Refresh list object
+            UpdateSettingsList();
         }
     }
 }

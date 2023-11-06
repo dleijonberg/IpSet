@@ -87,26 +87,23 @@ namespace NetworkAdapter
             ManagementObject mo = new ManagementObject("Win32_NetworkAdapterConfiguration.Index=" + DeviceID);
 
             // Check if DHCP is off, if so set static IP
-            if (!setting.DHCP)
+            if (!setting.DHCP && setting.Ipv4Address != "" && setting.Ipv4Mask != "")
             {
-                if (setting.Ipv4Address != null)
-                {
-                    string[] addr = new string[2] { setting.Ipv4Address, "" };
-                    string[] mask = new string[2] { setting.Ipv4Mask, "" };
+                string[] addr = new string[2] { setting.Ipv4Address, "" };
+                string[] mask = new string[2] { setting.Ipv4Mask, "" };
+                object[] args = new object[2] { addr, mask };
+                mo.InvokeMethod("EnableStatic", args);
 
-                    object[] args = new object[2] { addr, mask };
-                    mo.InvokeMethod("EnableStatic", args);
-                }
-
-                if (setting.Gateway != null)
+                if (setting.Gateway != "")
                 {
-                    object[] args = new object[1] { setting.Gateway };
+                    addr = new string[1] { setting.Gateway };
+                    args = new object[1] { addr };
                     mo.InvokeMethod("SetGateways", args);
                 }
  
-                if (setting.DNS != null)
+                if (setting.DNS[0] != "")
                 {
-                    object[] args = new object[1] { setting.DNS };
+                    args = new object[1] { setting.DNS };
                     mo.InvokeMethod("SetDNSServerSearchOrder", args);
                 }
             }

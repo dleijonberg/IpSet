@@ -55,6 +55,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripReloadButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSetButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -311,8 +312,9 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSaveButton,
             this.toolStripNewButton,
+            this.toolStripButtonDelete,
+            this.toolStripSaveButton,
             this.toolStripSeparator1,
             this.toolStripReloadButton,
             this.toolStripSetButton});
@@ -365,6 +367,16 @@
             this.toolStripSetButton.Size = new System.Drawing.Size(27, 22);
             this.toolStripSetButton.Text = "Set";
             this.toolStripSetButton.Click += new System.EventHandler(this.toolStripSetButton_Click);
+            // 
+            // toolStripButtonDelete
+            // 
+            this.toolStripButtonDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
+            this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDelete.Name = "toolStripButtonDelete";
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(44, 22);
+            this.toolStripButtonDelete.Text = "Delete";
+            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
             // Form1
             // 
@@ -420,6 +432,7 @@
         private IPAddressControlLib.IPAddressControl tbGateway;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
     }
 }
 

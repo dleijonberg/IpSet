@@ -29,10 +29,6 @@ namespace IpSet
                 DNS = new string[2];
             }
 
-            public void InitArrays()
-            {
-                DNS = new string[2];
-            }
         }
 
         public List<Setting> SettingsList = new List<Setting>();
@@ -100,7 +96,7 @@ namespace IpSet
                         data = data.Replace("]", "");
 
                         n.Name = data;
-                        n.num = index;
+                        //n.num = index;
                         data = "";
                     }
 
