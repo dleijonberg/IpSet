@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Management;
+using System.Windows.Forms;
 
 namespace NetworkAdapter
 {
@@ -81,50 +84,63 @@ namespace NetworkAdapter
         }
 
         //  Sets adapter configuration on the specified network adapter by DeviceID
-        public void SetNicInfo(string DeviceID, IpSet.Settings.Setting setting)
+        public bool SetNicInfo(string DeviceID, IpSet.Settings.Setting setting)
         {
-            // Fetch the adapter component we want to change
-            ManagementObject mo = new ManagementObject("Win32_NetworkAdapterConfiguration.Index=" + DeviceID);
-
-            // Check if DHCP is off, if so set static IP
-            if (!setting.DHCP && setting.Ipv4Address != "" && setting.Ipv4Mask != "")
+            try 
             {
-                string[] addr = new string[2] { setting.Ipv4Address, "" };
-                string[] mask = new string[2] { setting.Ipv4Mask, "" };
-                object[] args = new object[2] { addr, mask };
-                mo.InvokeMethod("EnableStatic", args);
+                // Fetch the adapter component we want to change
+                ManagementObject mo = new ManagementObject("Win32_NetworkAdapterConfiguration.Index=" + DeviceID);
 
-                if (setting.Gateway != "")
+                // Check if DHCP is off, if so set static IP
+                if (!setting.DHCP && setting.Ipv4Address != "..." && setting.Ipv4Mask != "...")
                 {
-                    addr = new string[1] { setting.Gateway };
-                    args = new object[1] { addr };
-                    mo.InvokeMethod("SetGateways", args);
-                }
- 
-                if (setting.DNS[0] != "")
-                {
-                    args = new object[1] { setting.DNS };
-                    mo.InvokeMethod("SetDNSServerSearchOrder", args);
-                }
-            }
-            else
-            {
-                mo.InvokeMethod("EnableDHCP", null);
-                if (setting.DynamicDNS)
-                {
-                    object[] args = new object[1] { false };
-                    var result = mo.InvokeMethod("SetDynamicDNSRegistration", args);
+                    string[] addr = new string[1] { setting.Ipv4Address };
+                    string[] mask = new string[1] { setting.Ipv4Mask };
+                    object[] args = new object[2] { addr, mask };
+                    var result = mo.InvokeMethod("EnableStatic", args);
+
+                    if (result.ToString() != "0" )
+                        return false;
+
+
+                    if (setting.Gateway != "...")
+                    {
+                        addr = new string[1] { setting.Gateway };
+                        args = new object[1] { addr };
+                        mo.InvokeMethod("SetGateways", args);
+                    }
+
+                    if (setting.DNS[0] != "...")
+                    {
+                        args = new object[1] { setting.DNS };
+                        mo.InvokeMethod("SetDNSServerSearchOrder", args);
+                    }
                 }
                 else
                 {
-                    object[] args = new object[1] { setting.DNS };
-                    mo.InvokeMethod("SetDNSServerSearchOrder", args);
+                    mo.InvokeMethod("EnableDHCP", null);
+                    if (setting.DynamicDNS)
+                    {
+                        object[] args = new object[1] { false };
+                        var result = mo.InvokeMethod("SetDynamicDNSRegistration", args);
+                    }
+                    else
+                    {
+                        object[] args = new object[1] { setting.DNS };
+                        mo.InvokeMethod("SetDNSServerSearchOrder", args);
+                    }
+                    System.Threading.Thread.Sleep(1000);
                 }
-                System.Threading.Thread.Sleep(1000);
-            }
 
-            // Finally, release the adapter component
-            mo.Dispose();
+                // Finally, release the adapter component
+                mo.Dispose();
+
+            }
+            catch(Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            return true;
         }
 
         public Nics()

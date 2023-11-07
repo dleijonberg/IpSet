@@ -174,6 +174,9 @@ namespace IpSet
                 // Enable the address boxes
                 groupBox1.Enabled = true;
                 groupBox2.Enabled = true;
+                toolStripSetButton.Enabled = true;
+                toolStripSaveButton.Enabled = true;
+                toolStripButtonDelete.Enabled = true;
 
                 // Create a temporary setting instance to load settings from list
                 var newSetting = Settings.SettingsList[SelectedSetting];
@@ -202,6 +205,10 @@ namespace IpSet
                 // Disable groupboxes for IP and DNS if nothing is selected
                 groupBox1.Enabled = false;
                 groupBox2.Enabled = false;
+
+                toolStripSetButton.Enabled = false;
+                toolStripSaveButton.Enabled = false;
+                toolStripButtonDelete.Enabled = false;
             }
 
         }
@@ -238,7 +245,9 @@ namespace IpSet
             // Apply settings to NIC
             try
             {
-                NicObject.SetNicInfo(NicObject.GetDeviceIDFromNum(cbNics.SelectedIndex), n);
+                var result = NicObject.SetNicInfo(NicObject.GetDeviceIDFromNum(cbNics.SelectedIndex), n);
+                if (!result)
+                    MessageBox.Show("Gick inte att sätta IP-adress!");
             }
             catch (Exception exc)
             {

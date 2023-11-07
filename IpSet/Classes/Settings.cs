@@ -69,6 +69,11 @@ namespace IpSet
         {
             int index = 0;
 
+            if (!File.Exists(SettingsFile))
+            {
+                File.Create(SettingsFile).Close();
+            }
+
             StreamReader file = new StreamReader(SettingsFile);
 
             Setting n = new Setting();
