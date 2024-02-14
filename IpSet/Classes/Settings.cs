@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Net;
 
 namespace IpSet
 {
@@ -9,7 +10,6 @@ namespace IpSet
 
         public struct Setting
         {
-            public int num;
             public string Name;
             public bool DHCP;
             public bool DynamicDNS;
@@ -17,6 +17,7 @@ namespace IpSet
             public string Ipv4Mask;
             public string Gateway;
             public string[] DNS;
+            public bool valid;
 
             public void Init()
             {

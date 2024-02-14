@@ -1,5 +1,6 @@
 ﻿using NetworkAdapter;
 using System;
+using System.Net;
 using System.Windows.Forms;
 
 namespace IpSet
@@ -32,7 +33,7 @@ namespace IpSet
             // Clear the existing list
             cbNics.Items.Clear();
             // Update the Niclist in class Nics
-            NicObject.UpdateNicInfo();
+            NicObject.UpdateNicList();
 
             // Add all adapters from NicList to the combo box
             foreach (var nic in NicObject.NicList)
@@ -242,6 +243,8 @@ namespace IpSet
             n.DNS[0] = tbPriDNS.Text;
             n.DNS[1] = tbSecDNS.Text;
 
+            n.valid = IPAddress.TryParse(n.Ipv4Address, out var ipAddress);
+
             // Apply settings to NIC
             try
             {
@@ -255,7 +258,7 @@ namespace IpSet
             }
 
             // Update the info box to show new settings
-            NicObject.UpdateNicInfo();
+            NicObject.UpdateNicList();
             UpdateInfoText(cbNics.SelectedIndex);
         }
 
@@ -314,6 +317,12 @@ namespace IpSet
 
             // Refresh list object
             UpdateSettingsList();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            NicObject.UpdateNicInfo(cbNics.SelectedIndex);
+            UpdateInfoText(cbNics.SelectedIndex);
         }
     }
 }
