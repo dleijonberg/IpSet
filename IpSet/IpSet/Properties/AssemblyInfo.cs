@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("IpSet")]
-[assembly: AssemblyDescription("Tool for setting Ip-address")]
+[assembly: AssemblyDescription("Tool for setting IP-address")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Scissor Creek Design")]
 [assembly: AssemblyProduct("IpSet")]

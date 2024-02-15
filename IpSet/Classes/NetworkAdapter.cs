@@ -97,6 +97,7 @@ namespace NetworkAdapter
                 }
             }
 
+
             // Get the management object from Windows
             ManagementObject mo = new ManagementObject("Win32_NetworkAdapterConfiguration.Index=" + info.DeviceID);
 
@@ -116,37 +117,38 @@ namespace NetworkAdapter
         //  Sets adapter configuration on the specified network adapter by DeviceID
         public bool SetNicInfo(string DeviceID, IpSet.Settings.Setting setting)
         {
-            try 
+            if (setting.valid)
             {
-                // Fetch the adapter component we want to change
-                ManagementObject mo = new ManagementObject("Win32_NetworkAdapterConfiguration.Index=" + DeviceID);
-
-                if (setting.valid)
+                try
                 {
+                    // Fetch the adapter component we want to change
+                    ManagementObject mo = new ManagementObject("Win32_NetworkAdapterConfiguration.Index=" + DeviceID);
+
                     string[] addr, mask;
                     object[] args;
 
                     // Check if DHCP is off, if so set static IP
                     if (!setting.DHCP)
                     {
+                        // EnableStatic sets ip address and subnet mask
+                        addr = new string[] { setting.Ipv4Address };
+                        mask = new string[] { setting.Ipv4Mask };
+                        args = new object[] { addr, mask };
+                        mo.InvokeMethod("EnableStatic", args);
+
+                        // Set gateway address if entered
                         if (setting.Gateway != "...")
                         {
-                            addr = new string[1] { setting.Gateway };
-                            args = new object[1] { addr };
+                            addr = new string[] { setting.Gateway };
+                            args = new object[] { addr };
                             mo.InvokeMethod("SetGateways", args);
                         }
                         else
                         {
-                            addr = new string[1] { setting.Ipv4Address };
-                            args = new object[1] { addr };
+                            addr = new string[] { setting.Ipv4Address };
+                            args = new object[] { addr };
                             mo.InvokeMethod("SetGateways", args);
                         }
-
-                        // EnableStatic sets ip address and subnet mask
-                        addr = new string[1] { setting.Ipv4Address };
-                        mask = new string[1] { setting.Ipv4Mask };
-                        args = new object[2] { addr, mask };
-                        mo.InvokeMethod("EnableStatic", args);
 
                     }
                     else
@@ -154,41 +156,37 @@ namespace NetworkAdapter
                         mo.InvokeMethod("EnableDHCP", null);
                     }
 
-                    // Set DNS
-                    if (setting.DynamicDNS)
+                    // Set static DNS if dynamic DNS is unchecked and addresses contains something
+                    if (!setting.DynamicDNS && (setting.DNS[0] != "..." || setting.DNS[1] != "..."))
                     {
-                        args = new object[1] { false };
-                        mo.InvokeMethod("SetDynamicDNSRegistration", args);
+                        var dnsAddr = new List<string>();
+
+                        if (setting.DNS[0] != "...")
+                            dnsAddr.Add(setting.DNS[0]);
+
+                        if (setting.DNS[1] != "...")
+                            dnsAddr.Add(setting.DNS[1]);
+
+                        args = new object[1];
+                        args[0] = dnsAddr.ToArray();
+                        mo.InvokeMethod("SetDNSServerSearchOrder", args);
                     }
                     else
                     {
-                        if (setting.DNS[0] != "...")
-                        {
-                            if (setting.DNS[1] != "...")
-                                addr = new string[2] { setting.DNS[0], setting.DNS[1] };
-                            else
-                                addr = new string[1] { setting.DNS[0] };
-                            args = new object[1] { addr };
-                            mo.InvokeMethod("SetDNSServerSearchOrder", args);
-                        }
-                        else
-                        {
-                            // SetDNSServerSearchOrder with empty input deletes all entries
-                            args = new object[1];
-                            mo.InvokeMethod("SetDNSServerSearchOrder", args);
-                        }
+                        // SetDNSServerSearchOrder with empty input deletes all entries
+                        args = new object[1];
+                        mo.InvokeMethod("SetDNSServerSearchOrder", args);
                     }
+                    //System.Threading.Thread.Sleep(1000);
 
-//                    System.Threading.Thread.Sleep(1000);
+                    // Finally, release the adapter component
+                    mo.Dispose();
                 }
 
-                // Finally, release the adapter component
-                mo.Dispose();
-
-            }
-            catch(Exception exc)
-            {
-                MessageBox.Show(exc.Message);
+                catch(Exception exc)
+                {
+                    MessageBox.Show(exc.Message);
+                }
             }
             return true;
         }

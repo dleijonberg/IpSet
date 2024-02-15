@@ -175,9 +175,9 @@ namespace IpSet
                 // Enable the address boxes
                 groupBox1.Enabled = true;
                 groupBox2.Enabled = true;
-                toolStripSetButton.Enabled = true;
-                toolStripSaveButton.Enabled = true;
-                toolStripButtonDelete.Enabled = true;
+                toolStripButton_Set.Enabled = true;
+                toolStripButton_Save.Enabled = true;
+                toolStripButton_Delete.Enabled = true;
 
                 // Create a temporary setting instance to load settings from list
                 var newSetting = Settings.SettingsList[SelectedSetting];
@@ -207,9 +207,9 @@ namespace IpSet
                 groupBox1.Enabled = false;
                 groupBox2.Enabled = false;
 
-                toolStripSetButton.Enabled = false;
-                toolStripSaveButton.Enabled = false;
-                toolStripButtonDelete.Enabled = false;
+                toolStripButton_Set.Enabled = false;
+                toolStripButton_Save.Enabled = false;
+                toolStripButton_Delete.Enabled = false;
             }
 
         }
@@ -243,7 +243,7 @@ namespace IpSet
             n.DNS[0] = tbPriDNS.Text;
             n.DNS[1] = tbSecDNS.Text;
 
-            n.valid = IPAddress.TryParse(n.Ipv4Address, out var ipAddress);
+            n.valid = IPAddress.TryParse(n.Ipv4Address, out var ipAddress) || n.DHCP;
 
             // Apply settings to NIC
             try

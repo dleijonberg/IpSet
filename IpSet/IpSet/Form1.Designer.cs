@@ -50,13 +50,13 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lbInfoTextBox = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripNewButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_New = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Delete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Save = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripReloadButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSetButton = new System.Windows.Forms.ToolStripButton();
-            this.btnUpdate = new System.Windows.Forms.Button();
+            this.toolStripButton_Reload = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Set = new System.Windows.Forms.ToolStripButton();
+            this.btnUpdateInfo = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -290,7 +290,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnUpdate);
+            this.groupBox3.Controls.Add(this.btnUpdateInfo);
             this.groupBox3.Controls.Add(this.lbInfoTextBox);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(3, 239);
@@ -314,12 +314,12 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripNewButton,
-            this.toolStripButtonDelete,
-            this.toolStripSaveButton,
+            this.toolStripButton_New,
+            this.toolStripButton_Delete,
+            this.toolStripButton_Save,
             this.toolStripSeparator1,
-            this.toolStripReloadButton,
-            this.toolStripSetButton});
+            this.toolStripButton_Reload,
+            this.toolStripButton_Set});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(502, 25);
@@ -328,32 +328,32 @@
             // 
             // toolStripNewButton
             // 
-            this.toolStripNewButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripNewButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripNewButton.Image")));
-            this.toolStripNewButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripNewButton.Name = "toolStripNewButton";
-            this.toolStripNewButton.Size = new System.Drawing.Size(35, 22);
-            this.toolStripNewButton.Text = "New";
-            this.toolStripNewButton.Click += new System.EventHandler(this.toolStripNewButton_Click);
+            this.toolStripButton_New.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton_New.Image = ((System.Drawing.Image)(resources.GetObject("toolStripNewButton.Image")));
+            this.toolStripButton_New.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_New.Name = "toolStripNewButton";
+            this.toolStripButton_New.Size = new System.Drawing.Size(35, 22);
+            this.toolStripButton_New.Text = "New";
+            this.toolStripButton_New.Click += new System.EventHandler(this.toolStripNewButton_Click);
             // 
             // toolStripButtonDelete
             // 
-            this.toolStripButtonDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
-            this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(44, 22);
-            this.toolStripButtonDelete.Text = "Delete";
-            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
+            this.toolStripButton_Delete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton_Delete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
+            this.toolStripButton_Delete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Delete.Name = "toolStripButtonDelete";
+            this.toolStripButton_Delete.Size = new System.Drawing.Size(44, 22);
+            this.toolStripButton_Delete.Text = "Delete";
+            this.toolStripButton_Delete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
             // toolStripSaveButton
             // 
-            this.toolStripSaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSaveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSaveButton.Name = "toolStripSaveButton";
-            this.toolStripSaveButton.Size = new System.Drawing.Size(35, 22);
-            this.toolStripSaveButton.Text = "Save";
-            this.toolStripSaveButton.Click += new System.EventHandler(this.toolStripSaveButton_Click);
+            this.toolStripButton_Save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton_Save.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Save.Name = "toolStripSaveButton";
+            this.toolStripButton_Save.Size = new System.Drawing.Size(35, 22);
+            this.toolStripButton_Save.Text = "Save";
+            this.toolStripButton_Save.Click += new System.EventHandler(this.toolStripSaveButton_Click);
             // 
             // toolStripSeparator1
             // 
@@ -362,34 +362,34 @@
             // 
             // toolStripReloadButton
             // 
-            this.toolStripReloadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripReloadButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripReloadButton.Image")));
-            this.toolStripReloadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripReloadButton.Name = "toolStripReloadButton";
-            this.toolStripReloadButton.Size = new System.Drawing.Size(47, 22);
-            this.toolStripReloadButton.Text = "Reload";
-            this.toolStripReloadButton.Click += new System.EventHandler(this.toolStripReloadButton_Click);
+            this.toolStripButton_Reload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton_Reload.Image = ((System.Drawing.Image)(resources.GetObject("toolStripReloadButton.Image")));
+            this.toolStripButton_Reload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Reload.Name = "toolStripReloadButton";
+            this.toolStripButton_Reload.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton_Reload.Text = "Reload";
+            this.toolStripButton_Reload.Click += new System.EventHandler(this.toolStripReloadButton_Click);
             // 
             // toolStripSetButton
             // 
-            this.toolStripSetButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSetButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSetButton.Image")));
-            this.toolStripSetButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSetButton.Name = "toolStripSetButton";
-            this.toolStripSetButton.Size = new System.Drawing.Size(27, 22);
-            this.toolStripSetButton.Text = "Set";
-            this.toolStripSetButton.Click += new System.EventHandler(this.toolStripSetButton_Click);
+            this.toolStripButton_Set.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton_Set.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSetButton.Image")));
+            this.toolStripButton_Set.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Set.Name = "toolStripSetButton";
+            this.toolStripButton_Set.Size = new System.Drawing.Size(27, 22);
+            this.toolStripButton_Set.Text = "Set";
+            this.toolStripButton_Set.Click += new System.EventHandler(this.toolStripSetButton_Click);
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdate.Location = new System.Drawing.Point(201, 10);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(52, 24);
-            this.btnUpdate.TabIndex = 4;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.btnUpdateInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdateInfo.Location = new System.Drawing.Point(201, 10);
+            this.btnUpdateInfo.Name = "btnUpdate";
+            this.btnUpdateInfo.Size = new System.Drawing.Size(52, 24);
+            this.btnUpdateInfo.TabIndex = 4;
+            this.btnUpdateInfo.Text = "Update";
+            this.btnUpdateInfo.UseVisualStyleBackColor = true;
+            this.btnUpdateInfo.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // Form1
             // 
@@ -420,33 +420,33 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ComboBox cbNics;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label lbInfoTextBox;
+        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private IPAddressControlLib.IPAddressControl tbPriDNS;
-        private IPAddressControlLib.IPAddressControl tbSecDNS;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbInfoTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripSaveButton;
-        private System.Windows.Forms.ToolStripButton toolStripNewButton;
-        private System.Windows.Forms.ListView lstSettingsList;
-        private System.Windows.Forms.ToolStripButton toolStripSetButton;
-        private System.Windows.Forms.ToolStripButton toolStripReloadButton;
-        private System.Windows.Forms.CheckBox checkBox_DynamicDNS;
+        private System.Windows.Forms.ToolStripButton toolStripButton_New;
+        private System.Windows.Forms.ToolStripButton toolStripButton_Save;
+        private System.Windows.Forms.ToolStripButton toolStripButton_Delete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ToolStripButton toolStripButton_Set;
+        private System.Windows.Forms.ToolStripButton toolStripButton_Reload;
+        private System.Windows.Forms.ComboBox cbNics;
+        private System.Windows.Forms.ListView lstSettingsList;
         private System.Windows.Forms.CheckBox checkBox_DHCP;
         private IPAddressControlLib.IPAddressControl tbIpAddress;
         private IPAddressControlLib.IPAddressControl tbSubnetMask;
-        private System.Windows.Forms.Label label3;
         private IPAddressControlLib.IPAddressControl tbGateway;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
-        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.CheckBox checkBox_DynamicDNS;
+        private IPAddressControlLib.IPAddressControl tbPriDNS;
+        private IPAddressControlLib.IPAddressControl tbSecDNS;
+        private System.Windows.Forms.Button btnUpdateInfo;
     }
 }
 
