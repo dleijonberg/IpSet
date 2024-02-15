@@ -126,28 +126,54 @@ namespace NetworkAdapter
                     string[] addr, mask;
                     object[] args;
 
+
                     // Check if DHCP is off, if so set static IP
                     if (!setting.DHCP)
                     {
+                        ManagementBaseObject newIP = mo.GetMethodParameters("EnableStatic");
+                        ManagementBaseObject newGW = mo.GetMethodParameters("SetGateways");
+
                         if (setting.Gateway != "...")
                         {
+                            newGW["DefaultIPGateway"] = new string[] { setting.Gateway };
+
+                            ManagementBaseObject setGW = mo.InvokeMethod("SetGateways", newGW, null);
+
+                            /*
                             addr = new string[1] { setting.Gateway };
                             args = new object[1] { addr };
                             mo.InvokeMethod("SetGateways", args);
+                            */
                         }
                         else
                         {
+                            newGW["DefaultIPGateway"] = new string[] { "" };
+
+                            ManagementBaseObject setGW = mo.InvokeMethod("SetGateways", newGW, null);
+                            /*
                             addr = new string[1] { setting.Ipv4Address };
                             args = new object[1] { addr };
                             mo.InvokeMethod("SetGateways", args);
+                            */
                         }
 
+                        // Trying out another approach to WMI
+                        // Instead of supplying strings as argument to InvokeMethod(),
+                        // we fetch a WMI-object and set address and subnetmask as members of the object.
+                        // That way, maybe we can supply an empty string, or null values, to erase addresses? Worth a try :)
+
+                        newIP["IPAddress"] = new string[] { setting.Ipv4Address };
+                        newIP["SubnetMask"] = new string[] { setting.Ipv4Mask };
+
+                        ManagementBaseObject setIP = mo.InvokeMethod("EnableStatic", newIP, null);
+
+/*
                         // EnableStatic sets ip address and subnet mask
                         addr = new string[1] { setting.Ipv4Address };
                         mask = new string[1] { setting.Ipv4Mask };
                         args = new object[2] { addr, mask };
                         mo.InvokeMethod("EnableStatic", args);
-
+*/
                     }
                     else
                     {
@@ -191,6 +217,11 @@ namespace NetworkAdapter
                 MessageBox.Show(exc.Message);
             }
             return true;
+        }
+
+        public void Test_NetSet()
+        {
+            
         }
 
         public Nics()
